@@ -1,15 +1,12 @@
 {
   "required": true,
-  "package": "hu.bluestoplight.mixins",
+  "package": "dev.nectar.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "GameRendererMixin",
     "KeyboardMixin",
     "LightmapMixin",
-    "SoundSystemMixin",
-    "SourceMixin",
     "TickMovementMixin",
-    "TitleScreenMixin",
     "accessor.ChunkAccessor",
     "accessor.ClientChunkManagerAccessor",
     "accessor.ClientChunkMapAccessor",
