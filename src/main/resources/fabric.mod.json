@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "nectar",
   "version": "${version}",
-  "name": "nectar",
+  "name": "Nectar",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "wuritz"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -14,7 +14,7 @@
   "license": "CC0-1.0",
   "icon": "assets/nectar/icon.png",
   "accessWidener": "nectar.accesswidener",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "dev.nectar.Nectar"

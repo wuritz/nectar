@@ -31,7 +31,6 @@ public class Nectar implements ModInitializer {
 	public static final IEventBus EVENT_BUS = new EventBus();
 	public static final File FOLDER = FabricLoader.getInstance().getGameDir().resolve(MOD_ID).toFile();
 
-	public boolean loaded = false;
 	private boolean firstLoad = false;
 
 	@Override
@@ -42,7 +41,6 @@ public class Nectar implements ModInitializer {
 		}
 
 		LOGGER.info("Initializing Nectar...");
-		loaded = false;
 
 		mc = MinecraftClient.getInstance();
 
@@ -67,8 +65,6 @@ public class Nectar implements ModInitializer {
 
 		// Enable "Active" if it's the first load ever
 		if (firstLoad) ModuleManager.get().get(Active.class).setEnabled(true);
-
-		loaded = true;
 	}
 
 	@EventHandler
@@ -85,10 +81,6 @@ public class Nectar implements ModInitializer {
 
 	public static Identifier identifier(String path) {
 		return Identifier.of(Nectar.MOD_ID, path);
-	}
-
-	public boolean hasLoaded() {
-		return loaded;
 	}
 
 }
