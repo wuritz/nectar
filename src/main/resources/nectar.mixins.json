@@ -1,14 +1,24 @@
 {
-	"required": true,
-	"package": "dev.nectar.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "hu.bluestoplight.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "GameRendererMixin",
+    "KeyboardMixin",
+    "LightmapMixin",
+    "SoundSystemMixin",
+    "SourceMixin",
+    "TickMovementMixin",
+    "TitleScreenMixin",
+    "accessor.ChunkAccessor",
+    "accessor.ClientChunkManagerAccessor",
+    "accessor.ClientChunkMapAccessor",
+    "accessor.KeyBindingAccessor",
+    "game.GameOptionsMixin",
+    "game.MinecraftClientMixin",
+    "network.ClientPlayNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
