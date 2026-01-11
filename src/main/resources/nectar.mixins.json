@@ -14,6 +14,7 @@
     "accessor.ProjectionMatrix2Accessor",
     "game.GameOptionsMixin",
     "game.MinecraftClientMixin",
+    "game.TitleScreenMixin",
     "network.ClientPlayNetworkHandlerMixin",
     "render.GlBackendMixin",
     "render.GlCommandEncoderMixin",

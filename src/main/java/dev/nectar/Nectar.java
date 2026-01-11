@@ -11,11 +11,13 @@ import dev.nectar.modules.render.Active;
 import dev.nectar.systems.Systems;
 import dev.nectar.ui.screens.clickgui.ClickGUI;
 import dev.nectar.utils.Utils;
+import dev.nectar.utils.misc.Version;
 import meteordevelopment.orbit.EventBus;
 import meteordevelopment.orbit.EventHandler;
 import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -28,13 +30,28 @@ public class Nectar implements ModInitializer {
 
 	public static Nectar INSTANCE;
 	public static final String MOD_ID = "nectar";
-	public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
+	public static final ModMetadata MOD_META;
+	public static final String NAME;
+	public static final Version VERSION;
 
 	public static MinecraftClient mc;
 	public static final IEventBus EVENT_BUS = new EventBus();
+
 	public static final File FOLDER = FabricLoader.getInstance().getGameDir().resolve(MOD_ID).toFile();
+	public static final Logger LOG;
 
 	private boolean firstLoad = false;
+
+	static {
+		MOD_META = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
+
+		NAME = MOD_META.getName();
+		LOG = LoggerFactory.getLogger(NAME);
+
+		String verString = MOD_META.getVersion().getFriendlyString();
+
+		VERSION = new Version(verString);
+	}
 
 	@Override
 	public void onInitialize() {
