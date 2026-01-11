@@ -36,7 +36,7 @@ public class Systems {
 
     public static void save(File folder) {
         long start = java.lang.System.currentTimeMillis();
-        Nectar.LOG.info("Saving");
+        Nectar.LOG.info("Saving systems...");
 
         for (System<?> system : systems.values()) system.save(folder);
 

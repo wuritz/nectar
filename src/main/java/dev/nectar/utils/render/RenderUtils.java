@@ -2,11 +2,14 @@ package dev.nectar.utils.render;
 
 import dev.nectar.Nectar;
 import dev.nectar.core.Color;
+import dev.nectar.core.init.PostInit;
 import dev.nectar.core.renderer.ShapeMode;
+import dev.nectar.events.core.render.Render3DEvent;
 import dev.nectar.events.world.TickEvent;
 import dev.nectar.utils.misc.Pool;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import meteordevelopment.orbit.EventHandler;
+import net.irisshaders.iris.api.v0.IrisApi;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

@@ -17,6 +17,18 @@ repositories {
 	}
 
 	mavenCentral()
+
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "modrinth"
+				url = uri("https://api.modrinth.com/maven")
+			}
+		}
+		filter {
+			includeGroup("maven.modrinth")
+		}
+	}
 }
 
 loom {
@@ -29,6 +41,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	modCompileOnly("maven.modrinth:iris:${project.iris_version as String}")
 
 	implementation "meteordevelopment:orbit:${project.orbit_version}"
 	include "meteordevelopment:orbit:${project.orbit_version}"

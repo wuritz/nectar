@@ -3,7 +3,9 @@ package dev.nectar.utils;
 import com.mojang.blaze3d.systems.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.nectar.Nectar;
+import dev.nectar.mixins.accessor.ProjectionMatrix2Accessor;
 import dev.nectar.ui.screens.clickgui.ClickGUI;
+import dev.nectar.utils.render.RenderUtils;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
@@ -17,6 +19,7 @@ import static dev.nectar.Nectar.mc;
 
 public class Utils {
 
+    public static double frameTime;
     public static boolean rendering3D = true;
     private static final ProjectionMatrix2 matrix = new ProjectionMatrix2("nectar-projection-matrix", -10, 100, true);
 
@@ -47,7 +50,7 @@ public class Utils {
         float height = mc.getWindow().getFramebufferHeight();
 
         RenderSystem.setProjectionMatrix(matrix.set(width, height), ProjectionType.ORTHOGRAPHIC);
-        RenderUtils.projection.set(((ProjectionMatrix2Accessor) matrix).meteor$callGetMatrix(width, height));
+        RenderUtils.projection.set(((ProjectionMatrix2Accessor) matrix).nectar$callGetMatrix(width, height));
 
         rendering3D = false;
     }
@@ -57,7 +60,7 @@ public class Utils {
         float height = (float) (mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor());
 
         RenderSystem.setProjectionMatrix(matrix.set(width, height), ProjectionType.PERSPECTIVE);
-        RenderUtils.projection.set(((ProjectionMatrix2Accessor) matrix).meteor$callGetMatrix(width, height));
+        RenderUtils.projection.set(((ProjectionMatrix2Accessor) matrix).nectar$callGetMatrix(width, height));
 
         rendering3D = true;
     }

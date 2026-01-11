@@ -3,6 +3,7 @@ package dev.nectar.mixins.game;
 import dev.nectar.Nectar;
 import dev.nectar.events.game.GameLeftEvent;
 import dev.nectar.events.world.TickEvent;
+import dev.nectar.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -22,6 +23,7 @@ public abstract class MinecraftClientMixin {
     @Unique private boolean doItemUseCalled;
     @Unique private boolean rightClick;
     @Unique private boolean firstFrame;
+    @Unique private long lastTime;
 
     @Shadow public ClientWorld world;
 
@@ -66,5 +68,20 @@ public abstract class MinecraftClientMixin {
         if (world != null) {
             Nectar.EVENT_BUS.post(GameLeftEvent.get());
         }
+    }
+
+    // Time delta
+
+    @Inject(method = "render", at = @At("HEAD"))
+    private void onRender(CallbackInfo info) {
+        long time = System.currentTimeMillis();
+
+        if (firstFrame) {
+            lastTime = time;
+            firstFrame = false;
+        }
+
+        Utils.frameTime = (time - lastTime) / 1000.0;
+        lastTime = time;
     }
 }

@@ -2,6 +2,7 @@ package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import dev.nectar.core.init.PreInit;
 
 public class FullScreenRenderer {
     public static GpuBuffer vbo;

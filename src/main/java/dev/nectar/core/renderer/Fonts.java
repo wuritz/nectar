@@ -1,6 +1,7 @@
 package dev.nectar.core.renderer;
 
 import dev.nectar.Nectar;
+import dev.nectar.core.init.PreInit;
 import dev.nectar.core.renderer.text.CustomTextRenderer;
 import dev.nectar.core.renderer.text.FontFace;
 import dev.nectar.core.renderer.text.FontFamily;

@@ -2,6 +2,7 @@ package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.textures.GpuTextureView;
 import dev.nectar.core.Color;
+import dev.nectar.core.init.PreInit;
 import dev.nectar.gui.renderer.packer.TextureRegion;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.GpuSampler;
