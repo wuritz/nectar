@@ -36,11 +36,11 @@ public class Systems {
 
     public static void save(File folder) {
         long start = java.lang.System.currentTimeMillis();
-        Nectar.LOGGER.info("Saving");
+        Nectar.LOG.info("Saving");
 
         for (System<?> system : systems.values()) system.save(folder);
 
-        Nectar.LOGGER.info("Saved in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
+        Nectar.LOG.info("Saved in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void save() {
@@ -49,11 +49,11 @@ public class Systems {
 
     public static void load(File folder) {
         long start = java.lang.System.currentTimeMillis();
-        Nectar.LOGGER.info("Loading systems...");
+        Nectar.LOG.info("Loading systems...");
 
         for (System<?> system : systems.values()) system.load(folder);
 
-        Nectar.LOGGER.info("Loaded in {} milliseconds", java.lang.System.currentTimeMillis() - start);
+        Nectar.LOG.info("Loaded in {} milliseconds", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void load() {

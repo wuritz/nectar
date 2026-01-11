@@ -14,7 +14,7 @@ public class StreamUtils {
              OutputStream out = new FileOutputStream(to)) {
             in.transferTo(out);
         } catch (IOException e) {
-            Nectar.LOGGER.error("Error copying from file '{}' to file '{}'.", from.getName(), to.getName(), e);
+            Nectar.LOG.error("Error copying from file '{}' to file '{}'.", from.getName(), to.getName(), e);
         }
     }
 
@@ -22,7 +22,7 @@ public class StreamUtils {
         try (OutputStream out = new FileOutputStream(to)) {
             in.transferTo(out);
         } catch (IOException e) {
-            Nectar.LOGGER.error("Error writing to file '{}'.", to.getName());
+            Nectar.LOG.error("Error writing to file '{}'.", to.getName());
         } finally {
             IOUtils.closeQuietly(in);
         }

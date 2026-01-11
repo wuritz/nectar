@@ -25,7 +25,7 @@ public class Nectar implements ModInitializer {
 
 	public static Nectar INSTANCE;
 	public static final String MOD_ID = "nectar";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
 
 	public static MinecraftClient mc;
 	public static final IEventBus EVENT_BUS = new EventBus();
@@ -40,7 +40,7 @@ public class Nectar implements ModInitializer {
 			return;
 		}
 
-		LOGGER.info("Initializing Nectar...");
+		LOG.info("Initializing Nectar...");
 
 		mc = MinecraftClient.getInstance();
 
@@ -58,7 +58,7 @@ public class Nectar implements ModInitializer {
 
 		Systems.load();
 
-		LOGGER.info("Welcome to Nectar!");
+		LOG.info("Welcome to Nectar!");
 
 		// Save on shutdown
 		Runtime.getRuntime().addShutdownHook(new Thread(Systems::save));

@@ -61,7 +61,7 @@ public class WaypointManager {
         try (Writer writer = new FileWriter(CONFIG_FILE)) {
             GSON.toJson(waypoints, writer);
         } catch (IOException e) {
-            Nectar.LOGGER.error("[SEDNA]: Error in Waypoint Manager! " + e.toString());
+            Nectar.LOG.error("[SEDNA]: Error in Waypoint Manager! " + e.toString());
         }
     }
 
@@ -75,7 +75,7 @@ public class WaypointManager {
                 waypoints.putAll(loaded);
             }
         } catch (IOException e) {
-            Nectar.LOGGER.error("[SEDNA]: Error in Waypoint Manager! " + e.toString());
+            Nectar.LOG.error("[SEDNA]: Error in Waypoint Manager! " + e.toString());
         }
     }
 

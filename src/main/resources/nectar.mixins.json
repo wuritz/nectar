@@ -13,7 +13,9 @@
     "accessor.KeyBindingAccessor",
     "game.GameOptionsMixin",
     "game.MinecraftClientMixin",
-    "network.ClientPlayNetworkHandlerMixin"
+    "network.ClientPlayNetworkHandlerMixin",
+    "render.GlCommandEncoderMixin",
+    "render.RenderPipelineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

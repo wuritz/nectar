@@ -67,7 +67,7 @@ public class System<T> implements ISerializable<T> {
 
             temp.delete();
         } catch (IOException e) {
-            Nectar.LOGGER.error("Error saving {}. Possibly corrupted.", this.name, e);
+            Nectar.LOG.error("Error saving {}. Possibly corrupted.", this.name, e);
         }
     }
 
@@ -91,12 +91,12 @@ public class System<T> implements ISerializable<T> {
                         StreamUtils.copy(file, backup);
                     }
 
-                    Nectar.LOGGER.error("Error loading {}. Possibly corrupted?", this.name, e);
-                    Nectar.LOGGER.info("Saved settings backup to '{}'.", backup);
+                    Nectar.LOG.error("Error loading {}. Possibly corrupted?", this.name, e);
+                    Nectar.LOG.info("Saved settings backup to '{}'.", backup);
                 }
             }
         } catch (IOException e) {
-            Nectar.LOGGER.error("Error loading {}. Possibly corrupted?", this.name, e);
+            Nectar.LOG.error("Error loading {}. Possibly corrupted?", this.name, e);
         }
     }
 
