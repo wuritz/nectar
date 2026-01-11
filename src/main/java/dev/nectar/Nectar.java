@@ -1,5 +1,8 @@
 package dev.nectar;
 
+import dev.nectar.core.init.PostInit;
+import dev.nectar.core.init.PreInit;
+import dev.nectar.core.init.ReflectInit;
 import dev.nectar.core.input.CoreKeybinds;
 import dev.nectar.core.input.KeyAction;
 import dev.nectar.events.core.KeyEvent;
@@ -50,6 +53,10 @@ public class Nectar implements ModInitializer {
 			FOLDER.mkdir();
 		}
 
+		// Register init classes, then launch PreInit
+		ReflectInit.register();
+		ReflectInit.init(PreInit.class);
+
 		EVENT_BUS.registerLambdaFactory("dev.nectar", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
 		Systems.init();
@@ -57,6 +64,9 @@ public class Nectar implements ModInitializer {
 		EVENT_BUS.subscribe(this);
 
 		Systems.load();
+
+		// Launch PostInit
+		ReflectInit.init(PostInit.class);
 
 		LOG.info("Welcome to Nectar!");
 
