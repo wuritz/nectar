@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class ChunkIterator implements Iterator<Chunk> {
-    private final ClientChunkMapAccessor map = (ClientChunkMapAccessor) (Object) ((ClientChunkManagerAccessor) Nectar.mc.world.getChunkManager()).sedna$getChunks();
+    private final ClientChunkMapAccessor map = (ClientChunkMapAccessor) (Object) ((ClientChunkManagerAccessor) Nectar.mc.world.getChunkManager()).nectar$getChunks();
     private final boolean onlyWithLoadedNeighbours;
 
     private int i = 0;
@@ -25,8 +25,8 @@ public class ChunkIterator implements Iterator<Chunk> {
         Chunk prev = chunk;
         chunk = null;
 
-        while (i < map.sedna$getChunks().length()) {
-            chunk = map.sedna$getChunks().get(i++);
+        while (i < map.nectar$getChunks().length()) {
+            chunk = map.nectar$getChunks().get(i++);
             if (chunk != null && (!onlyWithLoadedNeighbours || isInRadius(chunk))) break;
         }
 

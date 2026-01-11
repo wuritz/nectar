@@ -7,7 +7,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class CoreKeybinds {
 
-    private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Nectar.identifier("sedna"));
+    private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Nectar.identifier("nectar"));
 
     public static KeyBinding OPEN_GUI = new KeyBinding("Open GUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_CONTROL, CATEGORY);
 

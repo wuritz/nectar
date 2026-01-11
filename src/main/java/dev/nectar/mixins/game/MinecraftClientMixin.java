@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2025. TheBlueStopLight
- * All rights reserved.
- */
-
 package dev.nectar.mixins.game;
 
 import dev.nectar.Nectar;

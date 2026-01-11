@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2025. TheBlueStopLight
- * All rights reserved.
- */
-
 package dev.nectar.mixins.accessor;
 
 import net.minecraft.client.world.ClientChunkManager;
@@ -15,5 +10,5 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 @Mixin(ClientChunkManager.ClientChunkMap.class)
 public interface ClientChunkMapAccessor {
     @Accessor("chunks")
-    AtomicReferenceArray<WorldChunk> sedna$getChunks();
+    AtomicReferenceArray<WorldChunk> nectar$getChunks();
 }

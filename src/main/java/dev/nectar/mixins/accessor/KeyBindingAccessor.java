@@ -15,15 +15,15 @@ public interface KeyBindingAccessor {
     static Map<String, KeyBinding> getKeysById() { return null; }
 
     @Accessor("boundKey")
-    InputUtil.Key sedna$getKey();
+    InputUtil.Key nectar$getKey();
 
     @Accessor("timesPressed")
-    int sedna$getTimesPressed();
+    int nectar$getTimesPressed();
 
     @Accessor("timesPressed")
-    void sedna$setTimesPressed(int timesPressed);
+    void nectar$setTimesPressed(int timesPressed);
 
     @Invoker("reset")
-    void sedna$invokeReset();
+    void nectar$invokeReset();
 
 }

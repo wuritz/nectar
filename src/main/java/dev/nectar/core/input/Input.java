@@ -21,7 +21,7 @@ public class Input {
     }
 
     public static int getKey(KeyBinding bind) {
-        return ((KeyBindingAccessor) bind).sedna$getKey().getCode();
+        return ((KeyBindingAccessor) bind).nectar$getKey().getCode();
     }
 
     public static void setKeyState(KeyBinding bind, boolean pressed) {

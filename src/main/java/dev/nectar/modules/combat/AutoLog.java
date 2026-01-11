@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2025. TheBlueStopLight
- * All rights reserved.
- */
-
 package dev.nectar.modules.combat;
 
 import dev.nectar.events.world.TickEvent;
