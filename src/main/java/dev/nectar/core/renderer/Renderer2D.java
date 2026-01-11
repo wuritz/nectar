@@ -1,14 +1,8 @@
-/*
- * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client).
- * Copyright (c) Meteor Development.
- */
-
 package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.textures.GpuTextureView;
-import meteordevelopment.meteorclient.gui.renderer.packer.TextureRegion;
-import meteordevelopment.meteorclient.utils.PreInit;
-import meteordevelopment.meteorclient.utils.render.color.Color;
+import dev.nectar.core.Color;
+import dev.nectar.gui.renderer.packer.TextureRegion;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.GpuSampler;
 
@@ -24,8 +18,8 @@ public class Renderer2D {
     public Renderer2D(boolean textured) {
         this.textured = textured;
 
-        triangles = new MeshBuilder(textured ? MeteorRenderPipelines.UI_TEXTURED : MeteorRenderPipelines.UI_COLORED);
-        lines = new MeshBuilder(MeteorRenderPipelines.UI_COLORED_LINES);
+        triangles = new MeshBuilder(textured ? NectarRenderPipelines.UI_TEXTURED : NectarRenderPipelines.UI_COLORED);
+        lines = new MeshBuilder(NectarRenderPipelines.UI_COLORED_LINES);
     }
 
     @PreInit
@@ -65,13 +59,13 @@ public class Renderer2D {
 
         MeshRenderer.begin()
             .attachments(MinecraftClient.getInstance().getFramebuffer())
-            .pipeline(MeteorRenderPipelines.UI_COLORED_LINES)
+            .pipeline(NectarRenderPipelines.UI_COLORED_LINES)
             .mesh(lines)
             .end();
 
         MeshRenderer.begin()
             .attachments(MinecraftClient.getInstance().getFramebuffer())
-            .pipeline(textured ? MeteorRenderPipelines.UI_TEXTURED : MeteorRenderPipelines.UI_COLORED)
+            .pipeline(textured ? NectarRenderPipelines.UI_TEXTURED : NectarRenderPipelines.UI_COLORED)
             .mesh(triangles)
             .sampler(samplerName, samplerView, sampler)
             .end();

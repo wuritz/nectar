@@ -1,13 +1,7 @@
-/*
- * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client).
- * Copyright (c) Meteor Development.
- */
-
 package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import meteordevelopment.meteorclient.utils.PreInit;
 
 public class FullScreenRenderer {
     public static GpuBuffer vbo;
@@ -24,7 +18,7 @@ public class FullScreenRenderer {
 
     @PreInit
     public static void init() {
-        mesh = new MeshBuilder(MeteorVertexFormats.POS2, VertexFormat.DrawMode.TRIANGLES, 4, 6);
+        mesh = new MeshBuilder(NectarVertexFormats.POS2, VertexFormat.DrawMode.TRIANGLES, 4, 6);
 
         mesh.begin();
 

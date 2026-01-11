@@ -1,8 +1,3 @@
-/*
- * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client).
- * Copyright (c) Meteor Development.
- */
-
 package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
@@ -12,9 +7,9 @@ import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import meteordevelopment.meteorclient.utils.Utils;
-import meteordevelopment.meteorclient.utils.render.RenderUtils;
-import meteordevelopment.meteorclient.utils.render.color.Color;
+import dev.nectar.core.Color;
+import dev.nectar.utils.Utils;
+import dev.nectar.utils.render.RenderUtils;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.GpuSampler;
 import net.minecraft.client.util.math.MatrixStack;
@@ -28,7 +23,7 @@ import java.util.HashMap;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-import static meteordevelopment.meteorclient.MeteorClient.mc;
+import static dev.nectar.Nectar.mc;
 
 public class MeshRenderer {
     private static final MeshRenderer INSTANCE = new MeshRenderer();
@@ -160,8 +155,8 @@ public class MeshRenderer {
                 GpuBufferSlice meshData = MeshUniforms.write(RenderUtils.projection, RenderSystem.getModelViewStack());
 
                 RenderPass pass = (depthAttachment != null && pipeline.wantsDepthTexture()) ?
-                    RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Meteor MeshRenderer", colorAttachment, clearColor, depthAttachment, OptionalDouble.empty()) :
-                    RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Meteor MeshRenderer", colorAttachment, clearColor);
+                    RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Nectar MeshRenderer", colorAttachment, clearColor, depthAttachment, OptionalDouble.empty()) :
+                    RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Nectar MeshRenderer", colorAttachment, clearColor);
 
                 pass.setPipeline(pipeline);
                 pass.setUniform("MeshData", meshData);

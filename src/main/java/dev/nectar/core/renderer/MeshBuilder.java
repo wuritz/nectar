@@ -15,7 +15,7 @@ import static dev.nectar.Nectar.mc;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class MeshBuilder {
-    private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment() || Boolean.getBoolean("meteor.render.debug");
+    private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment() || Boolean.getBoolean("nectar.render.debug");
 
     public double alpha = 1;
 

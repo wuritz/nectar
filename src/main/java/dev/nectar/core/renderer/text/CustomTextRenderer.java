@@ -3,7 +3,7 @@ package dev.nectar.core.renderer.text;
 import dev.nectar.core.Color;
 import dev.nectar.core.renderer.MeshBuilder;
 import dev.nectar.core.renderer.MeshRenderer;
-import dev.nectar.core.renderer.MeteorRenderPipelines;
+import dev.nectar.core.renderer.NectarRenderPipelines;
 import dev.nectar.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.BufferUtils;
@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 public class CustomTextRenderer implements TextRenderer {
     public static final Color SHADOW_COLOR = new Color(60, 60, 60, 180);
 
-    private final MeshBuilder mesh = new MeshBuilder(MeteorRenderPipelines.UI_TEXT);
+    private final MeshBuilder mesh = new MeshBuilder(NectarRenderPipelines.UI_TEXT);
 
     public final FontFace fontFace;
 
@@ -122,7 +122,7 @@ public class CustomTextRenderer implements TextRenderer {
 
             MeshRenderer.begin()
                 .attachments(MinecraftClient.getInstance().getFramebuffer())
-                .pipeline(MeteorRenderPipelines.UI_TEXT)
+                .pipeline(NectarRenderPipelines.UI_TEXT)
                 .mesh(mesh)
                 .sampler("u_Texture", font.texture.getGlTextureView(), font.texture.getSampler())
                 .end();
