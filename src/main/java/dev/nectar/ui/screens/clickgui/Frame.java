@@ -37,7 +37,7 @@ public class Frame {
         }
     }
 
-    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {
+    public void render(DrawContext drawContext, float deltaTicks) {
         int margin = (height / 2) - (mc.textRenderer.fontHeight / 2);
 
         drawContext.fill(x, y, x + width, y + height, UIUtils.BACKGROUND_BASE.getRGB());
@@ -46,7 +46,7 @@ public class Frame {
 
         if (extended) {
             for (ModButton button : buttons) {
-                button.render(drawContext, mouseX, mouseY, deltaTicks);
+                button.render(drawContext, deltaTicks);
             }
         }
     }

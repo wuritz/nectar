@@ -11,6 +11,7 @@
     "accessor.ClientChunkManagerAccessor",
     "accessor.ClientChunkMapAccessor",
     "accessor.KeyBindingAccessor",
+    "accessor.ProjectionMatrix2Accessor",
     "game.GameOptionsMixin",
     "game.MinecraftClientMixin",
     "network.ClientPlayNetworkHandlerMixin",

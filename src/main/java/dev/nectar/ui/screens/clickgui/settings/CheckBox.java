@@ -17,9 +17,7 @@ public class CheckBox extends Component {
     }
 
     @Override
-    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {
-        super.render(drawContext, mouseX, mouseY, deltaTicks);
-
+    public void render(DrawContext drawContext, float deltaTicks) {
         drawContext.fill(parent.parent.x, parent.parent.y + parent.offset + offset, parent.parent.x + parent.parent.width, parent.parent.y + parent.offset + offset + parent.parent.height, UIUtils.BACKGROUND_BASE.darker().getRGB());
         drawContext.drawTextWithShadow(mc.textRenderer, booleanSetting.getName(), parent.parent.x + margin, parent.parent.y + parent.offset + offset + margin, UIUtils.LIGHT.getRGB());
 

@@ -29,9 +29,8 @@ public class Slider extends Component {
     }
 
     @Override
-    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {
-        super.render(drawContext, mouseX, mouseY, deltaTicks);
-        double difference = Math.min(parent.parent.width, Math.max(0, mouseX - parent.parent.x));
+    public void render(DrawContext drawContext, float deltaTicks) {
+        double difference = Math.min(parent.parent.width, Math.max(0, parent.parent.x));
 
         drawContext.fill(parent.parent.x, parent.parent.y + parent.offset + offset, parent.parent.x + parent.parent.width, parent.parent.y + parent.offset + offset + parent.parent.height, UIUtils.BACKGROUND_BASE.darker().getRGB());
 
