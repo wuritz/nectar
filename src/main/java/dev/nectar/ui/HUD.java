@@ -18,6 +18,7 @@ import net.minecraft.client.render.RenderTickCounter;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("deprecated")
 public class HUD implements HudRenderCallback {
     private static MinecraftClient mc = Nectar.mc;
     private int margin = 8;

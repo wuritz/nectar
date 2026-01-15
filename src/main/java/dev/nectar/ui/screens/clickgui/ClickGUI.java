@@ -1,8 +1,7 @@
 package dev.nectar.ui.screens.clickgui;
 
-import dev.nectar.core.renderer.Renderer2D;
+import dev.nectar.Nectar;
 import dev.nectar.events.core.render.Render2DEvent;
-import dev.nectar.events.core.render.Render3DEvent;
 import dev.nectar.modules.Module;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.gui.Click;
@@ -15,12 +14,10 @@ import java.util.List;
 
 public class ClickGUI extends Screen {
     public static final ClickGUI INSTANCE = new ClickGUI();
-    private final List<Frame> frames;
+    private final List<Frame> frames = new ArrayList<>();;
 
     private ClickGUI() {
         super(Text.literal("ClickGUI"));
-
-        frames = new ArrayList<>();
 
         int offset = 20;
         int offsetX = 20;
@@ -37,10 +34,13 @@ public class ClickGUI extends Screen {
         }
     }
 
-    @EventHandler
-    public void onRender2D(Render2DEvent event) {
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+        super.render(context, mouseX, mouseY, deltaTicks);
+
         for (Frame frame : frames) {
-            frame.render(event.drawContext, event.tickDelta);
+            frame.render(context, deltaTicks);
+            frame.updatePos(mouseX, mouseY);
         }
     }
 
