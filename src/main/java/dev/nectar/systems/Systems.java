@@ -2,7 +2,8 @@ package dev.nectar.systems;
 
 import dev.nectar.Nectar;
 import dev.nectar.events.game.GameLeftEvent;
-import dev.nectar.modules.ModuleManager;
+import dev.nectar.modules.Modules;
+import dev.nectar.systems.hud.HUD;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import meteordevelopment.orbit.EventHandler;
 
@@ -15,7 +16,8 @@ public class Systems {
     private static final Map<Class<? extends System>, System<?>> systems = new Reference2ReferenceOpenHashMap<>();
 
     public static void init() {
-        add(new ModuleManager());
+        add(new Modules());
+        add(new HUD());
 
         // TODO: Implement Waypoints
         Nectar.EVENT_BUS.subscribe(Systems.class);

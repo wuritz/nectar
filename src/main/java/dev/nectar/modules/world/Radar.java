@@ -1,9 +1,11 @@
 package dev.nectar.modules.world;
 
+import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
 import dev.nectar.modules.util.settings.NumberSetting;
 import dev.nectar.ui.UIUtils;
 import dev.nectar.utils.Utils;
+import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -39,7 +41,8 @@ public class Radar extends Module {
         isRendering = false;
     }
 
-    public static void render(DrawContext drawContext) {
+    @EventHandler
+    public void onRender(Render2DEvent event) {
         if (!Utils.isToggleable()) return;
 
         int width = mc.getWindow().getScaledWidth();
@@ -47,12 +50,12 @@ public class Radar extends Module {
         int centerX = width - RADIUS;
         int centerY = mc.textRenderer.fontHeight + UIUtils.margin + RADIUS;
 
-        drawContext.fill(width - (2 * RADIUS), 0, width, (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
-        drawContext.drawTextWithShadow(mc.textRenderer, "Radar", centerX - (mc.textRenderer.getWidth("Radar") / 2), UIUtils.margin / 2, UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.fill(width - (2 * RADIUS), 0, width, (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
+        event.drawContext.drawTextWithShadow(mc.textRenderer, "Radar", centerX - (mc.textRenderer.getWidth("Radar") / 2), UIUtils.margin / 2, UIUtils.getSelectedPrimaryColor().getRGB());
 
-        drawContext.fill(centerX - RADIUS, centerY - RADIUS, centerX + RADIUS, centerY + RADIUS, UIUtils.BACKGROUND_BASE.getRGB());
+        event.drawContext.fill(centerX - RADIUS, centerY - RADIUS, centerX + RADIUS, centerY + RADIUS, UIUtils.BACKGROUND_BASE.getRGB());
 
-        drawIndicator(drawContext, centerX, centerY, UIUtils.getSelectedPrimaryColor());
+        drawIndicator(event.drawContext, centerX, centerY, UIUtils.getSelectedPrimaryColor());
 
         java.util.List<Entity> entities = new ArrayList<>();
         mc.world.getEntities().forEach(entities::add);
@@ -73,10 +76,10 @@ public class Radar extends Module {
             int indicatorY = centerY + (int)(delta.z * scale);
 
             Color color = UIUtils.getEntityColor(e);
-            drawIndicator(drawContext, indicatorX, indicatorY, color);
+            drawIndicator(event.drawContext, indicatorX, indicatorY, color);
 
             String displayName = e instanceof PlayerEntity ? e.getName().getString() : e.getType().getName().getString();
-            drawContext.drawTextWithShadow(mc.textRenderer, Text.literal(displayName), indicatorX - mc.textRenderer.getWidth(displayName) / 2, indicatorY + 3, UIUtils.LIGHT.getRGB());
+            event.drawContext.drawTextWithShadow(mc.textRenderer, Text.literal(displayName), indicatorX - mc.textRenderer.getWidth(displayName) / 2, indicatorY + 3, UIUtils.LIGHT.getRGB());
         }
     }
 

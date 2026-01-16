@@ -2,7 +2,7 @@ package dev.nectar.ui.screens.clickgui;
 
 import dev.nectar.Nectar;
 import dev.nectar.modules.Module;
-import dev.nectar.modules.ModuleManager;
+import dev.nectar.modules.Modules;
 import dev.nectar.ui.UIUtils;
 import dev.nectar.ui.screens.clickgui.settings.Component;
 import net.minecraft.client.MinecraftClient;
@@ -31,13 +31,13 @@ public class Frame {
         buttons = new ArrayList<>();
         int offset = height;
 
-        for (Module mod : ModuleManager.get().getModsInCategory(category)) {
+        for (Module mod : Modules.get().getModsInCategory(category)) {
             buttons.add(new ModButton(mod, this, offset));
             offset += height;
         }
     }
 
-    public void render(DrawContext drawContext, float deltaTicks) {
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {
         int margin = (height / 2) - (mc.textRenderer.fontHeight / 2);
 
         drawContext.fill(x, y, x + width, y + height, UIUtils.BACKGROUND_BASE.getRGB());
@@ -46,7 +46,7 @@ public class Frame {
 
         if (extended) {
             for (ModButton button : buttons) {
-                button.render(drawContext, deltaTicks);
+                button.render(drawContext, mouseX, mouseY, deltaTicks);
             }
         }
     }

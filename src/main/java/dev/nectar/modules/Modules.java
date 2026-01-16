@@ -35,17 +35,17 @@ import java.util.Objects;
 
 import static dev.nectar.Nectar.mc;
 
-public class ModuleManager extends System<ModuleManager> {
+public class Modules extends System<Modules> {
 
     private final List<Module> mods = new ArrayList<>();
     private final Map<Class<? extends Module>, Module> modInstances = new Reference2ReferenceOpenHashMap<>();
 
-    public ModuleManager() {
+    public Modules() {
         super("modules");
     }
 
-    public static ModuleManager get() {
-        return Systems.get(ModuleManager.class);
+    public static Modules get() {
+        return Systems.get(Modules.class);
     }
 
     @Override
@@ -185,7 +185,7 @@ public class ModuleManager extends System<ModuleManager> {
     }
 
     @Override
-    public ModuleManager fromTag(NbtCompound tag) {
+    public Modules fromTag(NbtCompound tag) {
         disableAll();
 
         NbtList modulesTag = tag.getListOrEmpty("modules");

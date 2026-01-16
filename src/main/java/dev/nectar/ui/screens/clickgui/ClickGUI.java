@@ -39,7 +39,7 @@ public class ClickGUI extends Screen {
         super.render(context, mouseX, mouseY, deltaTicks);
 
         for (Frame frame : frames) {
-            frame.render(context, deltaTicks);
+            frame.render(context, mouseX, mouseY, deltaTicks);
             frame.updatePos(mouseX, mouseY);
         }
     }

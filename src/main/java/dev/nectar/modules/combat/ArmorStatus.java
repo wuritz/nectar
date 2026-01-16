@@ -1,8 +1,9 @@
 package dev.nectar.modules.combat;
 
+import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
 import dev.nectar.utils.Utils;
-import net.minecraft.client.gui.DrawContext;
+import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 
@@ -17,12 +18,13 @@ public class ArmorStatus extends Module {
         super("ArmorStatus", "Renders your armor durability on the HUD", Category.COMBAT);
     }
 
-    public static void render(DrawContext context) {
+    @EventHandler
+    public void onRender(Render2DEvent event) {
         if (!Utils.isToggleable()) return;
         if (mc.player.isSpectator()) return;
 
-        int width = context.getScaledWindowWidth();
-        int height = context.getScaledWindowHeight();
+        int width = event.drawContext.getScaledWindowWidth();
+        int height = event.drawContext.getScaledWindowHeight();
 
         ItemStack[] armor = new ItemStack[]{getItem(EquipmentSlot.FEET), getItem(EquipmentSlot.LEGS), getItem(EquipmentSlot.CHEST), getItem(EquipmentSlot.HEAD)};
 
@@ -37,8 +39,8 @@ public class ArmorStatus extends Module {
         int y = height - 15;
 
         for (ItemStack stack : itemsToRender) {
-            context.drawItem(stack, x, y);
-            context.drawStackOverlay(mc.textRenderer, stack, x, y);
+            event.drawContext.drawItem(stack, x, y);
+            event.drawContext.drawStackOverlay(mc.textRenderer, stack, x, y);
 
             y -= 20;
         }

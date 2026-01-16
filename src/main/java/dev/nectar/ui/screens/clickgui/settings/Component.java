@@ -19,7 +19,7 @@ public class Component {
         this.offset = offset;
     }
 
-    public void render(DrawContext drawContext, float deltaTicks) {}
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {}
 
     public void mouseClicked(double mouseX, double mouseY, int button) {}
 

@@ -1,6 +1,7 @@
 package dev.nectar.core.renderer;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import dev.nectar.Nectar;
 import dev.nectar.core.Color;
 import dev.nectar.utils.world.Dir;
 import net.minecraft.client.MinecraftClient;

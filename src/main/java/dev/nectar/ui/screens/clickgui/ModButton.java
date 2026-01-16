@@ -1,7 +1,7 @@
 package dev.nectar.ui.screens.clickgui;
 
 import dev.nectar.modules.Module;
-import dev.nectar.modules.ModuleManager;
+import dev.nectar.modules.Modules;
 import dev.nectar.modules.util.settings.*;
 import dev.nectar.ui.screens.clickgui.settings.*;
 import dev.nectar.ui.screens.clickgui.settings.Component;
@@ -45,15 +45,29 @@ public class ModButton {
         }
     }
 
-    public void render(DrawContext drawContext, float deltaTicks) {
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float deltaTicks) {
         int margin = (parent.height / 2) - (parent.mc.textRenderer.fontHeight / 2);
 
         if (extended) drawContext.fill(parent.x, parent.y + offset, parent.x + parent.width, parent.y + offset + parent.height, new Color(38,38,38,180).getRGB());
         else drawContext.fill(parent.x, parent.y + offset, parent.x + parent.width, parent.y + offset + parent.height, UIUtils.BACKGROUND_BASE.brighter().getRGB());
 
+        if (isHovered(mouseX, mouseY)) {
+            drawContext.fill(parent.x, parent.y + offset, parent.x + parent.width, parent.y + offset + parent.height, UIUtils.BACKGROUND_BASE.brighter().getRGB());
+            drawContext.drawTextWithShadow(parent.mc.textRenderer, mod.getName(), parent.x + margin, parent.y + offset + margin, UIUtils.BACKGROUND_MID.getRGB());
+
+            for (Module m : Modules.get().getEnabled()) {
+                if (Objects.equals(m.getName(), "Descriptions")) {
+                    drawContext.fill(mouseX - pageMargin, mouseY, mouseX + parent.mc.textRenderer.getWidth(mod.getDescription()) + pageMargin, mouseY + parent.mc.textRenderer.fontHeight + margin, UIUtils.BACKGROUND_BASE.brighter().getRGB());
+                    drawContext.drawTextWithShadow(parent.mc.textRenderer, mod.getDescription(), mouseX, mouseY + (margin / 2), UIUtils.LIGHT.getRGB());
+                }
+            }
+        } else {
+            drawContext.drawTextWithShadow(parent.mc.textRenderer, mod.getName(), parent.x + margin, parent.y + offset + margin, mod.isEnabled() ? UIUtils.getSelectedPrimaryColor().getRGB() : UIUtils.LIGHT.getRGB());
+        }
+
         if (extended) {
             for (Component component : components) {
-                component.render(drawContext, deltaTicks);
+                component.render(drawContext, mouseX, mouseY, deltaTicks);
             }
         }
     }

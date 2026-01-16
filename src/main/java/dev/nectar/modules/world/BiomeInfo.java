@@ -1,9 +1,10 @@
 package dev.nectar.modules.world;
 
+import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
 import dev.nectar.ui.UIUtils;
 import dev.nectar.utils.Utils;
-import net.minecraft.client.gui.DrawContext;
+import meteordevelopment.orbit.EventHandler;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -50,14 +51,16 @@ public class BiomeInfo extends Module {
         return formatted.toString().trim();
     }
 
-    public static void render(DrawContext drawContext) {
-        drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin, 0, (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) + (mc.textRenderer.getWidth(BiomeInfo.getBiomeName())) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, UIUtils.BACKGROUND_BASE.getRGB());
-        drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) + (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey())) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
 
-        drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin, 0,  ((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin) + UIUtils.margin / 4, (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
-        drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, ((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin) + UIUtils.margin / 4, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+    @EventHandler
+    public void onRender(Render2DEvent event) {
+        event.drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin, 0, (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) + (mc.textRenderer.getWidth(BiomeInfo.getBiomeName())) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, UIUtils.BACKGROUND_BASE.getRGB());
+        event.drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) + (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey())) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
 
-        drawContext.drawTextWithShadow(mc.textRenderer, BiomeInfo.getBiomeName(), (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2), (UIUtils.margin / 2), UIUtils.getSelectedPrimaryColor().getRGB());
-        drawContext.drawTextWithShadow(mc.textRenderer, BiomeInfo.getBiomeKey(), (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2),(UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
+        event.drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin, 0,  ((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2) - UIUtils.margin) + UIUtils.margin / 4, (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.fill((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, ((mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2) - UIUtils.margin) + UIUtils.margin / 4, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+
+        event.drawContext.drawTextWithShadow(mc.textRenderer, BiomeInfo.getBiomeName(), (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeName()) / 2), (UIUtils.margin / 2), UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.drawTextWithShadow(mc.textRenderer, BiomeInfo.getBiomeKey(), (mc.getWindow().getScaledWidth() / 2) - (mc.textRenderer.getWidth(BiomeInfo.getBiomeKey()) / 2),(UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
     }
 }

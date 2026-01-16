@@ -1,10 +1,11 @@
 package dev.nectar.modules.world;
 
+import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
 import dev.nectar.modules.util.settings.BooleanSetting;
 import dev.nectar.modules.util.settings.ModeSetting;
 import dev.nectar.ui.UIUtils;
-import net.minecraft.client.gui.DrawContext;
+import meteordevelopment.orbit.EventHandler;
 
 import java.time.LocalDateTime;
 
@@ -141,17 +142,18 @@ public class Clock extends Module {
         return stringTime + suffix;
     }
 
-    public static void render(DrawContext drawContext) {
-        drawContext.fill(0, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
-        drawContext.fill(mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+    @EventHandler
+    public void onRender(Render2DEvent event) {
+        event.drawContext.fill(0, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
+        event.drawContext.fill(mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
-        drawContext.drawTextWithShadow(mc.textRenderer, Clock.getClockString(), UIUtils.margin / 2, (UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.drawTextWithShadow(mc.textRenderer, Clock.getClockString(), UIUtils.margin / 2, (UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
         if (Clock.shouldShowDayCount()) {
-            drawContext.fill(0, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
-            drawContext.fill(mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+            event.drawContext.fill(0, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
+            event.drawContext.fill(mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
-            drawContext.drawTextWithShadow(mc.textRenderer, Clock.getDayString(), UIUtils.margin / 2, (UIUtils.margin / 2) + 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
+            event.drawContext.drawTextWithShadow(mc.textRenderer, Clock.getDayString(), UIUtils.margin / 2, (UIUtils.margin / 2) + 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
         }
     }
 }

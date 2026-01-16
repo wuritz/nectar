@@ -6,7 +6,7 @@ import dev.nectar.core.init.ReflectInit;
 import dev.nectar.core.input.CoreKeybinds;
 import dev.nectar.core.input.KeyAction;
 import dev.nectar.events.core.KeyEvent;
-import dev.nectar.modules.ModuleManager;
+import dev.nectar.modules.Modules;
 import dev.nectar.modules.render.Active;
 import dev.nectar.systems.Systems;
 import dev.nectar.ui.screens.clickgui.ClickGUI;
@@ -91,7 +91,7 @@ public class Nectar implements ModInitializer {
 		Runtime.getRuntime().addShutdownHook(new Thread(Systems::save));
 
 		// Enable "Active" if it's the first load ever
-		if (firstLoad) ModuleManager.get().get(Active.class).setEnabled(true);
+		if (firstLoad) Modules.get().get(Active.class).setEnabled(true);
 	}
 
 	@EventHandler
