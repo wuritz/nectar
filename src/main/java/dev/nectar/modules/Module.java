@@ -12,7 +12,8 @@ import net.minecraft.nbt.NbtElement;
 import java.util.List;
 
 public class Module implements ISerializable<Module> {
-    private Category category;
+
+    private final Category category;
     private String name, displayName, description;
     private int key;
     private boolean enabled;
