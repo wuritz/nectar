@@ -11,7 +11,7 @@ import static dev.nectar.Nectar.mc;
 
 public class ModuleButton extends Component {
 
-    private final Module module;
+    public final Module module;
 
     public ModuleButton(int x, int y, int width, int height, Module module) {
         super(x, y, width, height);
@@ -32,7 +32,6 @@ public class ModuleButton extends Component {
     protected boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (isHovered(mouseX, mouseY)) {
             if (mouseButton == 0) {
-                Modules.get().get(module.getName()).toggle();
                 return true;
             }
         }

@@ -44,7 +44,7 @@ public class Module implements ISerializable<Module> {
     public void toggle() {
         this.enabled = !this.enabled;
 
-        if (enabled) {
+        if (this.enabled) {
             Nectar.EVENT_BUS.subscribe(this);
             onEnable();
         } else {

@@ -58,6 +58,7 @@ public class ClickGUI extends Screen {
         int mcY = mc.getWindow().getHeight() / 2 - mcHeight - (mcHeight / 4);
 
         modulesContainer = new ModulesContainer(mcX, mcY, mcWidth, mcHeight);
+        modulesContainer.updateCategory(selectedCategory.category);
         components.add(modulesContainer);
 
         return modulesContainer;
