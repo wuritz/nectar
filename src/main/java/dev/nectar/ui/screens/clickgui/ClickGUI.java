@@ -5,53 +5,82 @@ import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static dev.nectar.Nectar.mc;
+
 public class ClickGUI extends Screen {
 
     public static final ClickGUI INSTANCE = new ClickGUI();
-    private final List<Frame> frames = new ArrayList<>();;
+    private final List<Component> components = new ArrayList<>();
+    private final List<CategoryButton> categoryButtons = new ArrayList<>();
     private final ModulesContainer modulesContainer;
+    private CategoryButton selectedCategory = null;
 
     private ClickGUI() {
         super(Text.literal("ClickGUI"));
 
-        int offsetY = 20;
-        int offsetX = 20;
+        modulesContainer = initClickGUI();
+    }
 
-        modulesContainer = new ModulesContainer(20, 20, 500, 350);
+     /**
+     *  Init ClickGUI
+     *
+     *  @return
+     */
+    private @NonNull ModulesContainer initClickGUI() {
+        final ModulesContainer modulesContainer;
+        int mcWidth = 500;
+        int mcHeight = 350;
+        int modulesWidth = 100;
+        int modulesHeight = mcHeight / 6;
+
+        int modulesX = mc.getWindow().getWidth() / 2 - mcWidth - (mcWidth / 2) - modulesWidth;
+        int modulesY = mc.getWindow().getHeight() / 2 - mcHeight - (mcHeight / 4);
 
         for (Module.Category category : Module.Category.values()) {
-            frames.add(new Frame(offsetX, 20 + offsetY, 100, 20, category));
-            offsetX += 100;
+            CategoryButton newButton = new CategoryButton(modulesX, modulesY, modulesWidth, modulesHeight, category);
+
+            categoryButtons.add(newButton);
+            components.add(newButton);
+
+            modulesY += modulesHeight;
         }
+
+        // Select the first category by default
+        selectedCategory = categoryButtons.getFirst();
+        selectedCategory.select();
+
+        int mcX = modulesX + modulesWidth;
+        int mcY = mc.getWindow().getHeight() / 2 - mcHeight - (mcHeight / 4);
+
+        modulesContainer = new ModulesContainer(mcX, mcY, mcWidth, mcHeight);
+        components.add(modulesContainer);
+
+        return modulesContainer;
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        modulesContainer.render(context);
-
-        for (Frame frame : frames) {
-            frame.render(context, mouseX, mouseY, deltaTicks);
-            frame.updatePos(mouseX, mouseY);
-        }
+        components.forEach(component -> component.render(context, mouseX, mouseY));
     }
 
     @Override
     public boolean mouseClicked(Click click, boolean doubled) {
-        for (Frame frame : frames) {
-            frame.mouseClicked(click.x(), click.y(), click.button());
-        }
-        return true;
-    }
+        components.forEach(component -> {
+            if (!(component instanceof CategoryButton)) component.mouseClicked(click.x(), click.y(), click.button());
 
-    @Override
-    public boolean mouseReleased(Click click) {
-        for (Frame frame : frames) {
-            frame.mouseReleased(click.x(), click.y(), click.button());
-        }
+            // Handle ModulesButton
+            if (!component.mouseClicked(click.x(), click.y(), click.button())) return;
+
+            // Update the selected category
+            selectedCategory.deselect();
+            selectedCategory = (CategoryButton) component;
+            modulesContainer.updateCategory(selectedCategory.category);
+        });
         return true;
     }
 }

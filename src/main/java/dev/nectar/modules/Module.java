@@ -26,7 +26,7 @@ public class Module implements ISerializable<Module> {
     public enum Category {
         COMBAT("Combat"), PLAYER("Player"), MOVEMENT("Movement"), RENDER("Render"), MISC("Misc"), WORLD("World");
 
-        public String name;
+        public final String name;
         Category(String name) {
             this.name = name;
         }
