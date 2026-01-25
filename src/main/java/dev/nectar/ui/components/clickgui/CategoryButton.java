@@ -1,14 +1,14 @@
-package dev.nectar.ui.screens.clickgui;
+package dev.nectar.ui.components.clickgui;
 
 import dev.nectar.modules.Module;
+import dev.nectar.ui.components.Component;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.cursor.Cursor;
 
 import java.awt.*;
 
 import static dev.nectar.Nectar.mc;
 
-public class CategoryButton extends Component{
+public class CategoryButton extends Component {
 
     private final String categoryName;
     public final Module.Category category;
@@ -53,6 +53,12 @@ public class CategoryButton extends Component{
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onLeftClick() {
+        select();
+        return true;
     }
 
 }

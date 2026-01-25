@@ -1,7 +1,8 @@
-package dev.nectar.ui.screens.clickgui;
+package dev.nectar.ui.components.clickgui;
 
 import dev.nectar.modules.Module;
 import dev.nectar.modules.Modules;
+import dev.nectar.ui.components.Component;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;
@@ -45,11 +46,11 @@ public class ModulesContainer extends Component {
     }
 
     @Override
-    protected void render(DrawContext context, int mouseX, int mouseY) {
+    public void render(DrawContext context, int mouseX, int mouseY) {
         // Background
         context.fill(this.x, y, x + width, y + height, new Color(56, 56, 56, 100).getRGB());
 
-        if (currentCategory == null) categoryLabel = "None selected";
+        if (currentCategory == null) categoryLabel = "None selected"; // how
 
         // Label
         context.drawTextWithShadow(mc.textRenderer, categoryLabel, x + 10, y + 10, Color.WHITE.getRGB());
@@ -57,8 +58,17 @@ public class ModulesContainer extends Component {
     }
 
     @Override
-    protected boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        moduleButtons.forEach((moduleButton) -> moduleButton.mouseClicked(mouseX, mouseY, mouseButton));
-        return true;
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        moduleButtons.forEach((moduleButton) -> {
+            if (moduleButton.isHovered(mouseX, mouseY) && button == 0) moduleButton.onLeftClick();
+        });
+
+        return false;
+    }
+
+    @Override
+    public boolean onLeftClick() {
+        //moduleButtons.forEach(ModuleButton::onLeftClick);
+        return false;
     }
 }

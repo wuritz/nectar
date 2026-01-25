@@ -1,10 +1,13 @@
-package dev.nectar.ui.screens.clickgui;
+package dev.nectar.ui.components;
 
 import net.minecraft.client.gui.DrawContext;
 
 public abstract class Component {
 
-    public final int x, y, width, height;
+    public int x;
+    public int y;
+    public final int width;
+    public final int height;
 
     public Component(int x, int y, int width, int height) {
         this.x = x;
@@ -20,17 +23,32 @@ public abstract class Component {
      * @param mouseX Mouse X pos
      * @param mouseY Mouse Y pos
      */
-    protected abstract void render(DrawContext context, int mouseX, int mouseY);
+    public abstract void render(DrawContext context, int mouseX, int mouseY);
+
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        if (isHovered(mouseX, mouseY) && mouseButton == 0) return onLeftClick();
+
+        return false;
+    }
 
     /**
-     * The mouse clicking process of a Component
+     * Optional void for handling mouse release
      *
-     * @param mouseX Mouse X pos
-     * @param mouseY Mouse Y pos
-     * @param mouseButton Left 0 - Right 1
+     * @param mouseX
+     * @param mouseY
+     * @param mouseButton
+     * @return
+     */
+    public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
+        return false;
+    }
+
+    /**
+     * Called when the component is clicked
+     *
      * @return Boolean
      */
-    protected abstract boolean mouseClicked(double mouseX, double mouseY, int mouseButton);
+    public abstract boolean onLeftClick();
 
     /**
      * Hovering detection using the comparison of coordinates

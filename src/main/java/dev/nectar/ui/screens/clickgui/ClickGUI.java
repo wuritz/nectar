@@ -1,6 +1,9 @@
 package dev.nectar.ui.screens.clickgui;
 
 import dev.nectar.modules.Module;
+import dev.nectar.ui.components.Component;
+import dev.nectar.ui.components.clickgui.CategoryButton;
+import dev.nectar.ui.components.clickgui.ModulesContainer;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;

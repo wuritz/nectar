@@ -60,13 +60,10 @@ public class Modules extends System<Modules> {
         add(new Clock());
         add(new Active());
         add(new Radar());
-        add(new Tracers());
         add(new MobESP());
-        add(new StorageESP());
         add(new AutoLog());
         add(new FreeCam());
         add(new Fullbright());
-        add(new ItemESP());
         add(new ArmorStatus());
         add(new AutoTool());
     }
