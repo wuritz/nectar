@@ -7,6 +7,7 @@ import dev.nectar.Nectar;
 import dev.nectar.core.renderer.NectarRenderPipelines;
 import dev.nectar.core.renderer.Renderer3D;
 import dev.nectar.events.core.render.Render3DEvent;
+import dev.nectar.modules.Modules;
 import dev.nectar.modules.player.Zoom;
 import dev.nectar.utils.Utils;
 import dev.nectar.utils.render.RenderUtils;
@@ -53,7 +54,7 @@ public abstract class GameRendererMixin {
 
     @ModifyReturnValue(method = "getFov", at = @At("RETURN"))
     private float modifyFov(float fov, @Local(argsOnly = true) float tickDelta) {
-        return fov * Zoom.getZoomModifier();
+        return fov * Modules.get().get(Zoom.class).getZoomModifier();
     }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = {"ldc=hand"}))

@@ -1,5 +1,6 @@
 package dev.nectar.mixins;
 
+import dev.nectar.modules.Modules;
 import dev.nectar.modules.render.Fullbright;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.render.LightmapTextureManager;
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class LightmapMixin {
     @Redirect(method = "update(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/SimpleOption;getValue()Ljava/lang/Object;"))
     private Object forceFullbright(SimpleOption<Double> instance) {
-        if (Fullbright.status) {
+        if (Modules.get().isActive(Fullbright.class)) {
             return 1000.0;
         }
 

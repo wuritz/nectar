@@ -5,7 +5,7 @@ import dev.nectar.core.init.PreInit;
 import dev.nectar.core.init.ReflectInit;
 import dev.nectar.core.input.CoreKeybinds;
 import dev.nectar.core.input.KeyAction;
-import dev.nectar.events.core.KeyEvent;
+import dev.nectar.events.core.input.KeyEvent;
 import dev.nectar.modules.Modules;
 import dev.nectar.modules.render.Active;
 import dev.nectar.systems.Systems;

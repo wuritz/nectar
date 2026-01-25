@@ -3,19 +3,16 @@ package dev.nectar.modules;
 import dev.nectar.Nectar;
 import dev.nectar.core.input.Input;
 import dev.nectar.core.input.KeyAction;
-import dev.nectar.events.core.KeyEvent;
+import dev.nectar.events.core.input.KeyEvent;
 import dev.nectar.events.game.GameJoinedEvent;
 import dev.nectar.events.game.GameLeftEvent;
 import dev.nectar.modules.combat.ArmorStatus;
-import dev.nectar.modules.combat.AutoLog;
 import dev.nectar.modules.misc.Descriptions;
 import dev.nectar.modules.movement.Sprint;
-import dev.nectar.modules.player.AutoTool;
-import dev.nectar.modules.player.FreeCam;
 import dev.nectar.modules.player.Zoom;
 import dev.nectar.modules.render.*;
 import dev.nectar.modules.world.*;
-import dev.nectar.modules.util.settings.Setting;
+import dev.nectar.modules.setting.Setting;
 import dev.nectar.systems.System;
 import dev.nectar.systems.Systems;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
@@ -31,7 +28,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static dev.nectar.Nectar.mc;
 
@@ -61,11 +57,8 @@ public class Modules extends System<Modules> {
         add(new Active());
         add(new Radar());
         add(new MobESP());
-        add(new AutoLog());
-        add(new FreeCam());
         add(new Fullbright());
         add(new ArmorStatus());
-        add(new AutoTool());
     }
 
     public List<Module> getAll() {

@@ -1,34 +1,47 @@
 package dev.nectar.modules.render;
 
 import dev.nectar.modules.Module;
-import dev.nectar.modules.util.settings.NumberSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.settings.DoubleSetting;
 import dev.nectar.ui.UIUtils;
 
 public class RainbowHue extends Module {
-    private static NumberSetting saturation = new NumberSetting("Saturation", 0.1, 1.0, 0.2, 0.05);
-    private static NumberSetting brightness = new NumberSetting("Brightness", 0.1, 1.0, 1.0, 0.05);
-    private static NumberSetting seconds = new NumberSetting("Loop Length", 1.0, 20.0, 12.0, 1.0);
+
+    private final Setting<Double> saturation = new DoubleSetting.Builder()
+            .name("Saturation").description("")
+            .min(0.1d).max(1d)
+            .defaultValue(0.2d)
+            .build();
+
+    private final Setting<Double> brightness = new DoubleSetting.Builder()
+            .name("Brightness").description("")
+            .min(0.1d).max(1d)
+            .defaultValue(1d)
+            .build();
+
+    private final Setting<Double> seconds = new DoubleSetting.Builder()
+            .name("Loop Length").description("")
+            .min(1d).max(20d)
+            .defaultValue(12d)
+            .build();
 
     public RainbowHue() {
         super("RainbowHue", "Makes the client's primary color a shifting rainbow hue.", Category.RENDER);
+
         addSettings(seconds, saturation, brightness);
     }
 
-    public static int getPrimaryColor() {
-        return UIUtils.getColor(seconds.getIntValue(), saturation.getFloatValue(), brightness.getFloatValue());
+    public int getPrimaryColor() {
+        return UIUtils.getColor(seconds.get().intValue(), saturation.get().floatValue(), brightness.get().floatValue());
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
-
         UIUtils.isRainbowEnabled = false;
     }
 
     @Override
     public void onEnable() {
-        super.onEnable();
-
         UIUtils.isRainbowEnabled = true;
     }
 }

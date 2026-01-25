@@ -2,8 +2,9 @@ package dev.nectar.modules.world;
 
 import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
-import dev.nectar.modules.util.settings.BooleanSetting;
-import dev.nectar.modules.util.settings.ModeSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.settings.BooleanSetting;
+import dev.nectar.modules.setting.settings.EnumSetting;
 import dev.nectar.ui.UIUtils;
 import meteordevelopment.orbit.EventHandler;
 
@@ -14,42 +15,54 @@ import static dev.nectar.Nectar.mc;
 public class Clock extends Module {
     private static String dayString = "";
 
-    private static ModeSetting mode = new ModeSetting("Mode", "Both", "In-Game", "Real World", "Both");
-    private static ModeSetting format = new ModeSetting("Format", "24", "12", "24");
-    private static BooleanSetting showDayCount = new BooleanSetting("Show Day Count", true);
+    private final Setting<Mode> mode = new EnumSetting.Builder<Mode>()
+            .name("Mode").description("")
+            .defaultValue(Mode.Both)
+            .build();
+
+    private final Setting<Format> format = new EnumSetting.Builder<Format>()
+            .name("Format").description("")
+            .defaultValue(Format.Europe)
+            .build();
+
+    private final Setting<Boolean> showDayCount = new BooleanSetting.Builder()
+            .name("Show day count").description("")
+            .defaultValue(true)
+            .build();
 
     public Clock() {
         super("Clock", "Displays in-game, and computer time.", Category.WORLD);
+
         addSettings(mode, format, showDayCount);
     }
 
-    public static String getClockString() {
-        if (mode.isMode("In-Game")) {
-            return getGameTime();
-        } else if (mode.isMode("Real World")) {
-            return getRealTime();
-        } else if (mode.isMode("Both")) {
-            return getGameTime() + " | " + getRealTime();
-        } else {
-            return "N/A";
+    public String getClockString() {
+        switch (mode.get()) {
+            case InGame -> getGameTime();
+            case IRL -> getRealTime();
+            case Both -> {
+                return getGameTime() + " | " + getRealTime();
+            }
         }
+
+        return "N/A";
     }
 
-    public static boolean shouldShowDayCount() {
-        return showDayCount.isEnabled();
+    public boolean shouldShowDayCount() {
+        return showDayCount.get();
     }
 
-    public static String getDayString() {
+    public String getDayString() {
         return dayString;
     }
 
-    private static String getRealTime() {
+    private String getRealTime() {
         int hour = LocalDateTime.now().getHour();
         int minutes = LocalDateTime.now().getMinute();
 
         String suffix = "";
 
-        if (!format.isMode("24")) {
+        if (format.get() == Format.Europe) {
             if (hour >= 13) {
                 hour = hour - 12;
                 suffix = " PM";
@@ -83,7 +96,7 @@ public class Clock extends Module {
         return stringHour + ":" + stringMinutes + suffix;
     }
 
-    private static String getGameTime() {
+    private String getGameTime() {
         int time;
         int gameTime = (int) mc.world.getTimeOfDay();
         int daysPlayed = 0;
@@ -103,7 +116,7 @@ public class Clock extends Module {
 
         String suffix = "";
 
-        if (!format.isMode("24")) {
+        if (format.get() != Format.Europe) {
             if (time >= 13000) {
                 time = time - 12000;
                 suffix = " PM";
@@ -133,7 +146,7 @@ public class Clock extends Module {
             stringMins = "0" + mins;
         }
 
-        if (!format.isMode("24") && stringSplit[0].equals("0")) {
+        if (format.get() != Format.Europe && stringSplit[0].equals("0")) {
             stringTime = new StringBuilder(stringSplit[1] + ":" + stringMins.charAt(0) + stringMins.charAt(1));
         } else {
             stringTime = new StringBuilder(stringSplit[0] + stringSplit[1] + ":" + stringMins.charAt(0) + stringMins.charAt(1));
@@ -144,16 +157,24 @@ public class Clock extends Module {
 
     @EventHandler
     public void onRender(Render2DEvent event) {
-        event.drawContext.fill(0, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
-        event.drawContext.fill(mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(Clock.getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.fill(0, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
+        event.drawContext.fill(mc.textRenderer.getWidth(getClockString()) + UIUtils.margin, mc.textRenderer.fontHeight + UIUtils.margin, mc.textRenderer.getWidth(getClockString()) + UIUtils.margin + (UIUtils.margin / 4), 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
-        event.drawContext.drawTextWithShadow(mc.textRenderer, Clock.getClockString(), UIUtils.margin / 2, (UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+        event.drawContext.drawTextWithShadow(mc.textRenderer, getClockString(), UIUtils.margin / 2, (UIUtils.margin / 2) + (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
-        if (Clock.shouldShowDayCount()) {
-            event.drawContext.fill(0, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
-            event.drawContext.fill(mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(Clock.getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
+        if (shouldShowDayCount()) {
+            event.drawContext.fill(0, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.BACKGROUND_BASE.getRGB());
+            event.drawContext.fill(mc.textRenderer.getWidth(getDayString()) + UIUtils.margin, 2 * (mc.textRenderer.fontHeight + UIUtils.margin), mc.textRenderer.getWidth(getDayString()) + UIUtils.margin + (UIUtils.margin / 4), 3 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.getSelectedPrimaryColor().getRGB());
 
-            event.drawContext.drawTextWithShadow(mc.textRenderer, Clock.getDayString(), UIUtils.margin / 2, (UIUtils.margin / 2) + 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
+            event.drawContext.drawTextWithShadow(mc.textRenderer, getDayString(), UIUtils.margin / 2, (UIUtils.margin / 2) + 2 * (mc.textRenderer.fontHeight + UIUtils.margin), UIUtils.LIGHT.darker().getRGB());
         }
+    }
+
+    private enum Mode {
+        Both, InGame, IRL
+    }
+
+    private enum Format {
+        Europe, AM
     }
 }

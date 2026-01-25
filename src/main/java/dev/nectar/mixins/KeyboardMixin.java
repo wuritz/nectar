@@ -3,7 +3,7 @@ package dev.nectar.mixins;
 import dev.nectar.Nectar;
 import dev.nectar.core.input.Input;
 import dev.nectar.core.input.KeyAction;
-import dev.nectar.events.core.KeyEvent;
+import dev.nectar.events.core.input.KeyEvent;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.KeyInput;

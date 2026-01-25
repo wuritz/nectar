@@ -1,4 +1,4 @@
-package dev.nectar.modules.util.settings;
+package dev.nectar.modules.setting;
 
 import dev.nectar.utils.misc.interfaces.ISerializable;
 import net.minecraft.nbt.NbtCompound;

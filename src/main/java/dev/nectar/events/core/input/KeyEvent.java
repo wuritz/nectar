@@ -1,4 +1,4 @@
-package dev.nectar.events.core;
+package dev.nectar.events.core.input;
 
 import dev.nectar.core.input.KeyAction;
 import dev.nectar.events.Cancellable;

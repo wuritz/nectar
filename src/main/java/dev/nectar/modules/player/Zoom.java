@@ -2,25 +2,43 @@ package dev.nectar.modules.player;
 
 import dev.nectar.core.input.KeyAction;
 import dev.nectar.core.input.Keybind;
-import dev.nectar.events.core.KeyEvent;
+import dev.nectar.events.core.input.KeyEvent;
 import dev.nectar.events.world.TickEvent;
 import dev.nectar.modules.Module;
-import dev.nectar.modules.util.settings.KeybindSetting;
-import dev.nectar.modules.util.settings.NumberSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.settings.DoubleSetting;
+import dev.nectar.modules.setting.settings.KeybindSetting;
 import dev.nectar.utils.Utils;
 import meteordevelopment.orbit.EventHandler;
 import org.lwjgl.glfw.GLFW;
 
 public class Zoom extends Module {
-    private static final NumberSetting zoomLevel = new NumberSetting("Modifier", 0.01, 1.0, 0.8, 0.01);
-    private static final NumberSetting speed = new NumberSetting("Speed", 0.1, 1.0, 0.9, 0.1);
-    private static final KeybindSetting zoomKey = new KeybindSetting("Zoom Key", Keybind.fromKey(GLFW.GLFW_KEY_C));
 
-    private static boolean zooming = false;
-    private static float progress = 0.0f;
+    private final Setting<Double> zoomLevel = new DoubleSetting.Builder()
+            .name("Modifier").description("")
+            .min(0.1d).max(1d)
+            .defaultValue(0.8d)
+            .build();
+
+    private final Setting<Double> speed = new DoubleSetting.Builder()
+            .name("Speed").description("")
+            .min(0.1d).max(1d)
+            .defaultValue(0.9d)
+            .build();
+
+    private final Setting<Keybind> zoomKey = new KeybindSetting.Builder()
+            .name("Zoom Key").description("")
+            .defaultValue(Keybind.fromKey(GLFW.GLFW_KEY_C))
+            .action(this::handleKey)
+            .build();
+
+    private boolean zooming = false;
+    private boolean canZoom = false;
+    private float progress = 0.0f;
 
     public Zoom() {
         super("Zoom", "Does the Samsung thing.", Category.PLAYER);
+
         addSetting(zoomLevel);
         addSetting(speed);
         addSetting(zoomKey);
@@ -29,27 +47,19 @@ public class Zoom extends Module {
     @EventHandler
     public void onTick(TickEvent.Pre event) {
         float target = zooming ? 1.0f : 0.0f;
-        progress += (target - progress) * speed.getFloatValue();
+        progress += (target - progress) * speed.get().floatValue();
 
         if (Math.abs(progress - target) < 0.001f) {
             progress = target;
         }
     }
 
-    public static float getZoomModifier() {
-        return 1.0f - (progress * zoomLevel.getFloatValue());
+    public float getZoomModifier() {
+        return 1.0f - (progress * zoomLevel.get().floatValue());
     }
 
-    public static float getZoomLevel() {
-        return zoomLevel.getFloatValue();
-    }
-
-    public static boolean isZooming() {
-        return zooming;
-    }
-
-    public static void setZooming(boolean zooming) {
-        Zoom.zooming = zooming;
+    private void handleKey() {
+        canZoom = true;
     }
 
     @EventHandler
@@ -57,9 +67,9 @@ public class Zoom extends Module {
         if (!Utils.isToggleable()) return;
         if (event.action == KeyAction.Repeat) return;
 
-        if (event.input.key() != zoomKey.getKeybind().getValue()) return;
+        if (!canZoom) return;
 
-        if (event.action == KeyAction.Release) setZooming(false);
-        else setZooming(true);
+        zooming = event.action != KeyAction.Release;
+        if (!zooming) canZoom = false;
     }
 }

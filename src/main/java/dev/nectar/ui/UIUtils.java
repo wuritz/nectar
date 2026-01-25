@@ -1,5 +1,6 @@
 package dev.nectar.ui;
 
+import dev.nectar.modules.Modules;
 import dev.nectar.modules.render.RainbowHue;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -31,7 +32,7 @@ public class UIUtils {
 
     public static Color getSelectedPrimaryColor() {
         if (isRainbowEnabled) {
-            selectedPrimary = RainbowHue.getPrimaryColor();
+            selectedPrimary = Modules.get().get(RainbowHue.class).getPrimaryColor();
         } else {
             selectedPrimary = BASE_COLOR;
         }
@@ -53,70 +54,4 @@ public class UIUtils {
         return BACKGROUND_LAYER;
     }
 
-    public static void espBox(MatrixStack matrixStack, VertexConsumer vertexConsumer, Box box, Color color) {
-        color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 50);
-
-        MatrixStack.Entry entry = matrixStack.peek();
-
-        float x1 = (float) box.minX;
-        float y1 = (float) box.minY;
-        float z1 = (float) box.minZ;
-
-        float x2 = (float) box.maxX;
-        float y2 = (float) box.maxY;
-        float z2 = (float) box.maxZ;
-
-        quad(entry, vertexConsumer, x1,y1,z1, x2,y1,z1, x2,y1,z2, x1,y1,z2, color);
-        quad(entry, vertexConsumer, x1,y2,z1, x2,y2,z1, x2,y2,z2, x1,y2,z2, color);
-        quad(entry, vertexConsumer, x1,y1,z1, x2,y1,z1, x2,y2,z1, x1,y2,z1, color);
-        quad(entry, vertexConsumer, x2,y1,z1, x2,y1,z2, x2,y2,z2, x2,y2,z1, color);
-        quad(entry, vertexConsumer, x2,y1,z2, x1,y1,z2, x1,y2,z2, x2,y2,z2, color);
-        quad(entry, vertexConsumer, x1,y1,z2, x1,y1,z1, x1,y2,z1, x1,y2,z2, color);
-    }
-
-    public static void espOutline(MatrixStack matrixStack, VertexConsumer vertexConsumer, Box box, Color color) {
-        MatrixStack.Entry entry = matrixStack.peek();
-
-        float x1 = (float) box.minX;
-        float y1 = (float) box.minY;
-        float z1 = (float) box.minZ;
-
-        float x2 = (float) box.maxX;
-        float y2 = (float) box.maxY;
-        float z2 = (float) box.maxZ;
-
-        line(entry, vertexConsumer, x1, y1, z1, x2, y1, z1, color);
-        line(entry, vertexConsumer, x2, y1, z1, x2, y1, z2, color);
-        line(entry, vertexConsumer, x2, y1, z2, x1, y1, z2, color);
-        line(entry, vertexConsumer, x1, y1, z2, x1, y1, z1, color);
-
-        line(entry, vertexConsumer, x1, y2, z1, x2, y2, z1, color);
-        line(entry, vertexConsumer, x2, y2, z1, x2, y2, z2, color);
-        line(entry, vertexConsumer, x2, y2, z2, x1, y2, z2, color);
-        line(entry, vertexConsumer, x1, y2, z2, x1, y2, z1, color);
-
-        line(entry, vertexConsumer, x1, y1, z1, x1, y2, z1, color);
-        line(entry, vertexConsumer, x2, y1, z1, x2, y2, z1, color);
-        line(entry, vertexConsumer, x2, y1, z2, x2, y2, z2, color);
-        line(entry, vertexConsumer, x1, y1, z2, x1, y2, z2, color);
-    }
-
-    private static void line(MatrixStack.Entry entry, VertexConsumer consumer, float x1, float y1, float z1, float x2, float y2, float z2, Color color) {
-        consumer.vertex(entry.getPositionMatrix(), x1, y1, z1).color(color.getRGB()).normal(0, 1, 0).lineWidth(3.0f).light(light);
-        consumer.vertex(entry.getPositionMatrix(), x2, y2, z2).color(color.getRGB()).normal(0, 1, 0).lineWidth(3.0f).light(light);
-    }
-
-    public static void tracerLine(MatrixStack matrixStack, VertexConsumer consumer, Vec3d start, Vec3d end, Color color) {
-        MatrixStack.Entry entry = matrixStack.peek();
-
-        consumer.vertex(entry.getPositionMatrix(), (float) start.x, (float) start.y, (float) start.z).color(color.getRGB()).normal(0, 1, 0).lineWidth(4.0f).light(light);
-        consumer.vertex(entry.getPositionMatrix(), (float) end.x, (float) end.y, (float) end.z).color(color.getRGB()).normal(0, 1, 0).lineWidth(4.0f).light(light);
-    }
-
-    private static void quad(MatrixStack.Entry entry, VertexConsumer consumer, float x1,float y1,float z1, float x2,float y2,float z2, float x3,float y3,float z3, float x4,float y4,float z4, Color color) {
-        consumer.vertex(entry.getPositionMatrix(), x1,y1,z1).color(color.getRGB()).light(light).normal(0, 1, 0);
-        consumer.vertex(entry.getPositionMatrix(), x2,y2,z2).color(color.getRGB()).light(light).normal(0, 1, 0);
-        consumer.vertex(entry.getPositionMatrix(), x3,y3,z3).color(color.getRGB()).light(light).normal(0, 1, 0);
-        consumer.vertex(entry.getPositionMatrix(), x4,y4,z4).color(color.getRGB()).light(light).normal(0, 1, 0);
-    }
 }

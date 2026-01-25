@@ -2,7 +2,8 @@ package dev.nectar.modules.world;
 
 import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
-import dev.nectar.modules.util.settings.NumberSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.settings.DoubleSetting;
 import dev.nectar.ui.UIUtils;
 import dev.nectar.utils.Utils;
 import meteordevelopment.orbit.EventHandler;
@@ -19,6 +20,13 @@ import java.util.ArrayList;
 import static dev.nectar.Nectar.mc;
 
 public class Radar extends Module {
+
+    private final Setting<Double> range = new DoubleSetting.Builder()
+            .name("Range").description("")
+            .min(20d).max(40d)
+            .defaultValue(32d)
+            .build();
+
     public Radar() {
         super("Radar", "Locates entities around you.", Category.WORLD);
 
@@ -27,17 +35,14 @@ public class Radar extends Module {
 
     public static boolean isRendering;
     private static final int RADIUS = 50;
-    private static NumberSetting range = new NumberSetting("Range", 20.0f, 40.0f, 32.0f, 1.0f);
 
     @Override
     public void onEnable() {
-        super.onEnable();
         isRendering = true;
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
         isRendering = false;
     }
 
@@ -67,10 +72,10 @@ public class Radar extends Module {
             if (!(e instanceof LivingEntity)) continue;
 
             double dist = e.getEntityPos().distanceTo(playerPos);
-            if (dist > range.getValue()) continue;
+            if (dist > range.get()) continue;
 
             Vec3d delta = e.getEntityPos().subtract(playerPos);
-            double scale = RADIUS / range.getValue();
+            double scale = RADIUS / range.get();
 
             int indicatorX = centerX + (int)(delta.x * scale);
             int indicatorY = centerY + (int)(delta.z * scale);

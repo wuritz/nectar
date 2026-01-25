@@ -2,9 +2,9 @@ package dev.nectar.modules;
 
 import dev.nectar.Nectar;
 import dev.nectar.core.input.Keybind;
-import dev.nectar.modules.util.settings.KeybindSetting;
-import dev.nectar.modules.util.settings.Setting;
-import dev.nectar.modules.util.settings.Settings;
+import dev.nectar.modules.setting.settings.KeybindSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.Settings;
 import dev.nectar.utils.Utils;
 import dev.nectar.utils.misc.interfaces.ISerializable;
 import net.minecraft.nbt.NbtCompound;
@@ -21,7 +21,11 @@ public class Module implements ISerializable<Module> {
 
     public final Settings settings = new Settings();
 
-    private final KeybindSetting keybindSetting = new KeybindSetting("Keybind", Keybind.none());
+    private final Setting<Keybind> keybindSetting = new KeybindSetting.Builder()
+            .name("Keybind").description("")
+            .defaultValue(Keybind.none())
+            .build();
+
     public final Keybind keybind = Keybind.none();
 
     public enum Category {
@@ -127,10 +131,6 @@ public class Module implements ISerializable<Module> {
         for (Setting setting : settings) {
             addSetting(setting);
         }
-    }
-
-    public Keybind getKeybind() {
-        return keybindSetting.getKeybind();
     }
 
     @Override

@@ -2,7 +2,8 @@ package dev.nectar.modules.world;
 
 import dev.nectar.events.core.render.Render2DEvent;
 import dev.nectar.modules.Module;
-import dev.nectar.modules.util.settings.ModeSetting;
+import dev.nectar.modules.setting.Setting;
+import dev.nectar.modules.setting.settings.EnumSetting;
 import dev.nectar.ui.UIUtils;
 import meteordevelopment.orbit.EventHandler;
 
@@ -11,22 +12,22 @@ import java.util.Objects;
 import static dev.nectar.Nectar.mc;
 
 public class Coordinates extends Module {
-    private static ModeSetting type = new ModeSetting("Type", "Extended", "Basic", "Extended");
+    private final Setting<Mode> type = new EnumSetting.Builder<Mode>()
+            .name("Type").description("")
+            .defaultValue(Mode.Extended)
+            .build();
 
     public Coordinates() {
         super("Coordinates", "Displays player coordinates.", Category.WORLD);
-        addSetting(type);
-    }
 
-    public static ModeSetting getType() {
-        return type;
+        addSetting(type);
     }
 
     @EventHandler
     public void onRender(Render2DEvent event) {
         int height = mc.getWindow().getScaledHeight();
 
-        if (Objects.equals(Coordinates.getType().getMode(), "Basic")) {
+        if (type.get() == Mode.Basic) {
             event.drawContext.fill(0, height - mc.textRenderer.fontHeight - UIUtils.margin, mc.textRenderer.getWidth("[XYZ]: " + mc.player.getBlockX() + " " + mc.player.getBlockY() + " " + mc.player.getBlockZ()) + UIUtils.margin + (UIUtils.margin / 4), height, UIUtils.BACKGROUND_BASE.getRGB());
             event.drawContext.fill(mc.textRenderer.getWidth("[XYZ]: " + mc.player.getBlockX() + " " + mc.player.getBlockY() + " " + mc.player.getBlockZ()) + UIUtils.margin, height - mc.textRenderer.fontHeight - UIUtils.margin, mc.textRenderer.getWidth("[XYZ]: " + mc.player.getBlockX() + " " + mc.player.getBlockY() + " " + mc.player.getBlockZ()) + UIUtils.margin + (UIUtils.margin / 4), height, UIUtils.getSelectedPrimaryColor().getRGB());
 
@@ -57,5 +58,9 @@ public class Coordinates extends Module {
                 event.drawContext.drawTextWithShadow(mc.textRenderer , "[XYZ]: " + mc.player.getBlockX() + " " + mc.player.getBlockY() + " " + mc.player.getBlockZ(), UIUtils.margin / 2, height - mc.textRenderer.fontHeight - (UIUtils.margin / 2), UIUtils.getSelectedPrimaryColor().getRGB());
             }
         }
+    }
+
+    private enum Mode {
+        Extended, Basic
     }
 }
