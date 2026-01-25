@@ -23,7 +23,7 @@ public class Active extends Module {
         int id = 0;
         int width = mc.getWindow().getScaledWidth();
 
-        List<Module> enabled = Modules.get().getEnabled();
+        List<Module> enabled = Modules.get().getActive();
         enabled.sort(Comparator.comparingInt(m -> mc.textRenderer.getWidth(((Module)m).getDisplayName())).reversed());
 
         int align = Radar.isRendering ? (100 + (mc.textRenderer.fontHeight + UIUtils.margin)) : 0; // 2 * RADIUS + card_height

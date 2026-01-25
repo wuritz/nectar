@@ -58,12 +58,7 @@ public class ModulesContainer extends Component {
 
     @Override
     protected boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        moduleButtons.forEach((moduleButton) -> {
-            if (moduleButton.mouseClicked(mouseX, mouseY, mouseButton)) {
-                Modules.get().get(moduleButton.module.getName()).toggle();
-            }
-        });
-
-        return false;
+        moduleButtons.forEach((moduleButton) -> moduleButton.mouseClicked(mouseX, mouseY, mouseButton));
+        return true;
     }
 }

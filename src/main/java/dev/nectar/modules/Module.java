@@ -5,6 +5,7 @@ import dev.nectar.core.input.Keybind;
 import dev.nectar.modules.util.settings.KeybindSetting;
 import dev.nectar.modules.util.settings.Setting;
 import dev.nectar.modules.util.settings.Settings;
+import dev.nectar.utils.Utils;
 import dev.nectar.utils.misc.interfaces.ISerializable;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -42,14 +43,22 @@ public class Module implements ISerializable<Module> {
     }
 
     public void toggle() {
-        enabled = !enabled;
+        if (!enabled) {
+            enabled = true;
+            Modules.get().addActive(this);
 
-        if (enabled) {
-            Nectar.EVENT_BUS.subscribe(this);
-            onEnable();
+            if (Utils.canUpdate()) {
+                Nectar.EVENT_BUS.subscribe(this);
+                onEnable();
+            }
         } else {
-            Nectar.EVENT_BUS.unsubscribe(this);
-            onDisable();
+            if (Utils.canUpdate()) {
+                Nectar.EVENT_BUS.unsubscribe(this);
+                onDisable();
+            }
+
+            enabled = false;
+            Modules.get().removeActive(this);
         }
     }
 

@@ -91,7 +91,7 @@ public class Nectar implements ModInitializer {
 		Runtime.getRuntime().addShutdownHook(new Thread(Systems::save));
 
 		// Enable "Active" if it's the first load ever
-		if (firstLoad) Modules.get().get(Active.class).setEnabled(true);
+		if (firstLoad && !Modules.get().isActive(Active.class)) Modules.get().get(Active.class).toggle();
 	}
 
 	@EventHandler

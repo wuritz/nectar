@@ -30,6 +30,7 @@ public class ModuleButton extends Component {
     protected boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (isHovered(mouseX, mouseY)) {
             if (mouseButton == 0) {
+                module.toggle();
                 return true;
             }
         }

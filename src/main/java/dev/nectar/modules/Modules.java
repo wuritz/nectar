@@ -38,6 +38,7 @@ import static dev.nectar.Nectar.mc;
 public class Modules extends System<Modules> {
 
     private final List<Module> mods = new ArrayList<>();
+    private final List<Module> active = new ArrayList<>();
     private final Map<Class<? extends Module>, Module> modInstances = new Reference2ReferenceOpenHashMap<>();
 
     public Modules() {
@@ -70,7 +71,7 @@ public class Modules extends System<Modules> {
         add(new AutoTool());
     }
 
-    public List<Module> getMods() {
+    public List<Module> getAll() {
         return mods;
     }
 
@@ -107,6 +108,24 @@ public class Modules extends System<Modules> {
         return categoryMods;
     }
 
+    public List<Module> getActive() {
+        return active;
+    }
+
+    void addActive(Module module) {
+        synchronized (active) {
+            if (!active.contains(module)) {
+                active.add(module);
+            }
+        }
+    }
+
+    void removeActive(Module module) {
+        synchronized (active) {
+            active.remove(module);
+        }
+    }
+
     @SuppressWarnings("unchecked") // To keep mr.IDE quiet
     @Nullable
     public <T extends Module> T get(Class<T> toFind) {
@@ -140,7 +159,7 @@ public class Modules extends System<Modules> {
     private void onAction(boolean isKey, int value, int modifiers, boolean isPress) {
         if (mc.currentScreen != null || Input.isKeyPressed(GLFW.GLFW_KEY_F3)) return;
 
-        for (Module module : getMods()) {
+        for (Module module : getAll()) {
             if (module.keybind.getValue() == value && isPress) {
                 module.toggle();
                 //module.sendToggledMsg();
@@ -152,19 +171,21 @@ public class Modules extends System<Modules> {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        for (Module module : getMods()) {
-            if (module.isEnabled()) {
-                Nectar.EVENT_BUS.subscribe(module);
-                module.onEnable();
+        synchronized (active) {
+            for (Module module : getAll()) {
+                if (module.isEnabled()) {
+                    Nectar.EVENT_BUS.subscribe(module);
+                    module.onEnable();
+                }
             }
         }
     }
 
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
-        for (Module module : getMods()) {
-            if (module.isEnabled()) {
-                if (!Objects.equals(module.getName(), "DiscordRPC")) {
+        synchronized (active) {
+            for (Module module : getAll()) {
+                if (module.isEnabled()) {
                     Nectar.EVENT_BUS.unsubscribe(module);
                     module.onDisable();
                 }
@@ -179,7 +200,7 @@ public class Modules extends System<Modules> {
         NbtCompound tag = new NbtCompound();
 
         NbtList modulesTag = new NbtList();
-        for (Module mod : getMods()) {
+        for (Module mod : getAll()) {
             NbtCompound modTag = mod.toTag();
             if (modTag != null) modulesTag.add(modTag);
         }

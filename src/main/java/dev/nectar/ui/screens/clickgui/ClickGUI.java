@@ -29,7 +29,7 @@ public class ClickGUI extends Screen {
      /**
      *  Init ClickGUI
      *
-     *  @return
+     *  @return The container
      */
     private @NonNull ModulesContainer initClickGUI() {
         final ModulesContainer modulesContainer;
@@ -72,15 +72,17 @@ public class ClickGUI extends Screen {
     @Override
     public boolean mouseClicked(Click click, boolean doubled) {
         components.forEach(component -> {
-            if (!(component instanceof CategoryButton)) component.mouseClicked(click.x(), click.y(), click.button());
+            if (component instanceof CategoryButton categoryButton) {
+                // Handle CategoryButton
+                if (!categoryButton.mouseClicked(click.x(), click.y(), click.button())) return;
 
-            // Handle ModulesButton
-            if (!component.mouseClicked(click.x(), click.y(), click.button())) return;
-
-            // Update the selected category
-            selectedCategory.deselect();
-            selectedCategory = (CategoryButton) component;
-            modulesContainer.updateCategory(selectedCategory.category);
+                // Update the selected category
+                selectedCategory.deselect();
+                selectedCategory = categoryButton;
+                modulesContainer.updateCategory(selectedCategory.category);
+            } else {
+                component.mouseClicked(click.x(), click.y(), click.button());
+            }
         });
 
         return true;
