@@ -2,6 +2,7 @@ package dev.nectar.ui.screens.clickgui;
 
 import dev.nectar.modules.Module;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.cursor.Cursor;
 
 import java.awt.*;
 

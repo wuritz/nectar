@@ -82,6 +82,7 @@ public class ClickGUI extends Screen {
             selectedCategory = (CategoryButton) component;
             modulesContainer.updateCategory(selectedCategory.category);
         });
+
         return true;
     }
 }

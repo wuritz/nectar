@@ -84,6 +84,11 @@ public class Modules extends System<Modules> {
         return enabledMods;
     }
 
+    public boolean isActive(Class<? extends Module> klass) {
+        Module module = get(klass);
+        return module != null && module.isEnabled();
+    }
+
     public void disableAll() {
         for (Module mod : mods) {
             mod.setEnabled(false);
