@@ -43,6 +43,14 @@ public abstract class Setting<T> implements IGetter<T>, ISerializable<T> {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     protected abstract boolean isValueValid(T value);
 
     protected void resetImpl() {

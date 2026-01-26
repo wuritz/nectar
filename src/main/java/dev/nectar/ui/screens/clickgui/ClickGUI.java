@@ -4,6 +4,7 @@ import dev.nectar.modules.Module;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.clickgui.CategoryButton;
 import dev.nectar.ui.components.clickgui.ModulesContainer;
+import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,25 +18,31 @@ import static dev.nectar.Nectar.mc;
 
 public class ClickGUI extends Screen {
 
-    public static final ClickGUI INSTANCE = new ClickGUI();
     private final List<Component> components = new ArrayList<>();
     private final List<CategoryButton> categoryButtons = new ArrayList<>();
-    private final ModulesContainer modulesContainer;
+    private final List<ModuleWindow> moduleWindows = new ArrayList<>();
+
+    private boolean overlapping = false;
+
+    private ModulesContainer modulesContainer;
     private CategoryButton selectedCategory = null;
 
-    private ClickGUI() {
+    public ClickGUI() {
         super(Text.literal("ClickGUI"));
 
         modulesContainer = initClickGUI();
     }
 
-     /**
-     *  Init ClickGUI
+    public void addModuleWindow(ModuleWindow moduleWindow) {
+        moduleWindows.add(moduleWindow);
+    }
+
+    /**
+     * Init ClickGUI
      *
-     *  @return The container
+     * @return The container
      */
     private @NonNull ModulesContainer initClickGUI() {
-        final ModulesContainer modulesContainer;
         int mcWidth = 500;
         int mcHeight = 350;
         int modulesWidth = 100;
@@ -60,7 +67,7 @@ public class ClickGUI extends Screen {
         int mcX = modulesX + modulesWidth;
         int mcY = mc.getWindow().getHeight() / 2 - mcHeight - (mcHeight / 4);
 
-        modulesContainer = new ModulesContainer(mcX, mcY, mcWidth, mcHeight);
+        modulesContainer = new ModulesContainer(mcX, mcY, mcWidth, mcHeight, this);
         modulesContainer.updateCategory(selectedCategory.category);
         components.add(modulesContainer);
 
@@ -70,11 +77,34 @@ public class ClickGUI extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         components.forEach(component -> component.render(context, mouseX, mouseY));
+        moduleWindows.forEach(moduleWindow -> {
+            moduleWindow.render(context, mouseX, mouseY);
+            moduleWindow.updatePos(mouseX, mouseY);
+        });
     }
 
     @Override
     public boolean mouseClicked(Click click, boolean doubled) {
         components.forEach(component -> {
+            moduleWindows.forEach(moduleWindow -> {
+                if (!moduleWindow.isOpened()) {
+                    overlapping = false;
+                    return;
+                }
+
+                if (component.isHovered(click.x(), click.y()) && moduleWindow.isHovered(click.x(), click.y())) {
+                    moduleWindow.mouseClicked(click.x(), click.y(), click.button());
+                    overlapping = true;
+                } else if (component.isHovered(click.x(), click.y())) {
+                    overlapping = false;
+                } else if (moduleWindow.isHovered(click.x(), click.y())) {
+                    moduleWindow.mouseClicked(click.x(), click.y(), click.button());
+                    overlapping = false;
+                }
+            });
+
+            if (overlapping) return;
+
             if (component instanceof CategoryButton categoryButton) {
                 // Handle CategoryButton
                 if (!categoryButton.mouseClicked(click.x(), click.y(), click.button())) return;
@@ -89,5 +119,13 @@ public class ClickGUI extends Screen {
         });
 
         return true;
+    }
+
+
+    @Override
+    public boolean mouseReleased(Click click) {
+        moduleWindows.forEach(moduleWindow -> moduleWindow.mouseReleased(click.x(), click.y(), click.button()));
+
+        return super.mouseReleased(click);
     }
 }

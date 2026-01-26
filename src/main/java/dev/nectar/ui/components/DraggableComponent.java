@@ -1,35 +1,51 @@
 package dev.nectar.ui.components;
 
-import net.minecraft.client.gui.DrawContext;
+import dev.nectar.ui.components.generic.CloseButton;
 
-public class DraggableComponent extends Component {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class DraggableComponent extends Component {
 
     private int dragX, dragY;
-    private boolean dragging = false;
+    protected boolean dragging;
+    protected List<Component> children = new ArrayList<>();
 
     public DraggableComponent(int x, int y, int width, int height) {
         super(x, y, width, height);
+
+        this.dragging = false;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        if (isHovered(mouseX, mouseY)) {
+            if ((mouseY <= y+20 && mouseY >= y) && mouseButton == 0) {
+                children.forEach(child -> {
+                    if (child.isHovered(mouseX, mouseY) && child instanceof CloseButton closeButton) closeButton.onLeftClick();
+                });
+
+                dragging = true;
+
+                dragX = (int) (mouseX - x);
+                dragY = (int) (mouseY - y);
+            }
+        }
+        return false;
     }
 
     /**
-     * The rendering process of the Component
-     *
-     * @param context DrawContext
-     * @param mouseX  Mouse X pos
-     * @param mouseY  Mouse Y pos
+     * Eliminates a bug
      */
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
+    protected abstract void updatePosAgain();
 
-    }
-
-    /**
-     * Called when the component is clicked
-     *
-     * @return Boolean
-     */
     @Override
-    public boolean onLeftClick() {
+    public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
+        if (mouseButton == 0 && dragging) {
+            dragging = false;
+            updatePosAgain();
+        }
+
         return false;
     }
 
@@ -39,4 +55,5 @@ public class DraggableComponent extends Component {
             y = (int) (mouseY - dragY);
         }
     }
+
 }

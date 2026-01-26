@@ -16,8 +16,15 @@ public class IntSetting extends Setting<Integer> {
         this.max = max;
     }
 
+    public int getMin() {
+        return min;
+    }
+    public int getMax() {
+        return max;
+    }
+
     @Override
-    protected boolean isValueValid(Integer value) {
+    public boolean isValueValid(Integer value) {
         return value >= min && value <= max;
     }
 

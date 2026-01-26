@@ -103,7 +103,9 @@ public class Nectar implements ModInitializer {
 
 	private void toggleGui() {
 		if (Utils.canCloseGui()) mc.currentScreen.close();
-		else if (Utils.canOpenGui()) mc.setScreen(ClickGUI.INSTANCE);
+		else if (Utils.canOpenGui()) {
+			mc.setScreen(new ClickGUI());
+		}
 	}
 
 	public static Identifier identifier(String path) {

@@ -3,6 +3,7 @@ package dev.nectar.ui.components.clickgui;
 import dev.nectar.modules.Module;
 import dev.nectar.modules.Modules;
 import dev.nectar.ui.components.Component;
+import dev.nectar.ui.screens.clickgui.ClickGUI;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;
@@ -14,11 +15,14 @@ import static dev.nectar.Nectar.mc;
 public class ModulesContainer extends Component {
 
     private final List<ModuleButton> moduleButtons = new ArrayList<>();
+    public final ClickGUI clickGUI;
     public Module.Category currentCategory = null;
     private String categoryLabel = "";
 
-    public ModulesContainer(int x, int y, int width, int height) {
+    public ModulesContainer(int x, int y, int width, int height, ClickGUI parent) {
         super(x, y, width, height);
+
+        this.clickGUI = parent;
     }
 
     public void updateCategory(Module.Category category) {
@@ -40,7 +44,7 @@ public class ModulesContainer extends Component {
         int yOffset = 10;
 
         for (Module mod : Modules.get().getModsInCategory(currentCategory)) {
-            moduleButtons.add(new ModuleButton(modX, modY, modWidth, modHeight, mod));
+            moduleButtons.add(new ModuleButton(modX, modY, modWidth, modHeight, mod, this));
             modY += modHeight + yOffset;
         }
     }
@@ -60,15 +64,12 @@ public class ModulesContainer extends Component {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         moduleButtons.forEach((moduleButton) -> {
-            if (moduleButton.isHovered(mouseX, mouseY) && button == 0) moduleButton.onLeftClick();
+            if (moduleButton.isHovered(mouseX, mouseY)) {
+                if (button == 0) moduleButton.onLeftClick();
+                else moduleButton.onRightClick();
+            }
         });
 
-        return false;
-    }
-
-    @Override
-    public boolean onLeftClick() {
-        //moduleButtons.forEach(ModuleButton::onLeftClick);
         return false;
     }
 }

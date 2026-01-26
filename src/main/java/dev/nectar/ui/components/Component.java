@@ -26,7 +26,10 @@ public abstract class Component {
     public abstract void render(DrawContext context, int mouseX, int mouseY);
 
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        if (isHovered(mouseX, mouseY) && mouseButton == 0) return onLeftClick();
+        if (isHovered(mouseX, mouseY)) {
+            if (mouseButton == 0) return onLeftClick();
+            if (mouseButton == 1) return onRightClick();
+        }
 
         return false;
     }
@@ -44,11 +47,22 @@ public abstract class Component {
     }
 
     /**
-     * Called when the component is clicked
+     * Called when the component is left-clicked
      *
      * @return Boolean
      */
-    public abstract boolean onLeftClick();
+    public boolean onLeftClick() {
+        return false;
+    };
+
+    /**
+     * Called when the component is right-clicked
+     *
+     * @return Boolean
+     */
+    public boolean onRightClick() {
+        return false;
+    }
 
     /**
      * Hovering detection using the comparison of coordinates

@@ -58,6 +58,7 @@ public class CategoryButton extends Component {
     @Override
     public boolean onLeftClick() {
         select();
+
         return true;
     }
 

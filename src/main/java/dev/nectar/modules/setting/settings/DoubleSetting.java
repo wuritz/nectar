@@ -21,6 +21,14 @@ public class DoubleSetting extends Setting<Double> {
         return value >= min && value <= max;
     }
 
+    public double getMin() {
+        return min;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
     @Override
     protected Double parseImpl(String str) {
         try {
