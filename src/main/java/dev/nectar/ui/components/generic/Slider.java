@@ -1,15 +1,12 @@
 package dev.nectar.ui.components.generic;
 
-import dev.nectar.Nectar;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.settings.SettingComponent;
 import net.minecraft.client.gui.DrawContext;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static dev.nectar.Nectar.LOG;
 import static dev.nectar.Nectar.mc;
@@ -17,16 +14,16 @@ import static dev.nectar.Nectar.mc;
 public class Slider extends Component {
 
     private final SettingComponent parentComponent;
-    private double min, max, finalValue, scrollingValue;
+    private final double max;
+    private double scrollingValue;
     private boolean sliding;
 
     private String scrollingText = "";
 
-    public Slider(int x, int y, int width, int height, double min, double max, SettingComponent<?> parentComponent) {
+    public Slider(int x, int y, int width, int height, double max, SettingComponent<?> parentComponent) {
         super(x, y, width, height);
 
         this.parentComponent = parentComponent;
-        this.min = min;
         this.max = max;
 
         sliding = false;
@@ -65,8 +62,8 @@ public class Slider extends Component {
 
     @SuppressWarnings("unchecked")
     private void handleNewValue() {
-        finalValue = Double.parseDouble(scrollingText);
-        if (!parentComponent.setting.set(finalValue)) Nectar:LOG.error("Error on Slider");
+        double finalValue = Double.parseDouble(scrollingText);
+        if (!parentComponent.setting.set(finalValue)) LOG.error("Error on Slider");
     }
 
     @Override

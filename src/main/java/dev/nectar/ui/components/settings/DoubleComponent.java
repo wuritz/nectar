@@ -9,29 +9,22 @@ import static dev.nectar.Nectar.mc;
 
 public class DoubleComponent extends SettingComponent<Double> {
 
-    private final DoubleSetting doubleSetting;
-
     public DoubleComponent(int x, int y, int width, int height, DoubleSetting setting) {
         super(x, y, width, height, setting);
 
-        this.doubleSetting = setting;
+        this.setting = setting;
 
         components.clear();
 
-        Slider slider = new Slider(x+(width/2), y, width/2-35, height, doubleSetting.getMin(), doubleSetting.getMax(), this);
+        Slider slider = new Slider(x+(width/2), y, width/2-35, height, setting.getMax(), this);
         components.add(slider);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
-        context.drawTextWithShadow(mc.textRenderer, doubleSetting.getName(), x, y, Color.WHITE.getPacked());
+        context.drawTextWithShadow(mc.textRenderer, setting.getName(), x, y, Color.WHITE.getPacked());
 
         components.forEach(component -> component.render(context, mouseX, mouseY));
-    }
-
-    @Override
-    public boolean updateValue(Double newValue) {
-        return doubleSetting.set(newValue);
     }
 
     @Override

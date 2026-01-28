@@ -21,8 +21,6 @@ public abstract class SettingComponent<T> extends Component {
 
     public abstract void render(DrawContext context, int mouseX, int mouseY);
 
-    public abstract boolean updateValue(T newValue);
-
     public float getValueForSlider() {
         if (setting.get() instanceof Boolean bool) {
             if (bool) return 1f;
@@ -38,7 +36,10 @@ public abstract class SettingComponent<T> extends Component {
 
     public abstract void updateComponentsPos(int x, int y);
 
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+
         if (isHovered(mouseX, mouseY)) components.forEach(component -> component.mouseClicked(mouseX, mouseY, mouseButton));
         return false;
     }

@@ -3,10 +3,12 @@ package dev.nectar.ui.screens.clickgui;
 import dev.nectar.modules.Module;
 import dev.nectar.modules.setting.Setting;
 import dev.nectar.modules.setting.Settings;
+import dev.nectar.modules.setting.settings.BooleanSetting;
 import dev.nectar.modules.setting.settings.DoubleSetting;
 import dev.nectar.modules.setting.settings.IntSetting;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.generic.HorizontalSeparator;
+import dev.nectar.ui.components.settings.BoolComponent;
 import dev.nectar.ui.components.settings.DoubleComponent;
 import dev.nectar.ui.components.settings.IntComponent;
 import dev.nectar.ui.components.settings.SettingComponent;
@@ -49,6 +51,9 @@ public class SettingsRenderer {
             } else if (setting instanceof DoubleSetting) {
                 DoubleComponent doubleComponent = new DoubleComponent(x, y, parentWindow.width, 10, (DoubleSetting) setting);
                 components.add(doubleComponent);
+            } else if (setting instanceof BooleanSetting) {
+                BoolComponent boolComponent = new BoolComponent(x, y, parentWindow.width, 10, (BooleanSetting) setting);
+                components.add(boolComponent);
             }
 
             y += 20;

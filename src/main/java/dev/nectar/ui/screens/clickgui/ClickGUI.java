@@ -128,4 +128,8 @@ public class ClickGUI extends Screen {
 
         return super.mouseReleased(click);
     }
+
+    public boolean isModuleWindowOpen(ModuleWindow moduleWindow) {
+        return moduleWindows.contains(moduleWindow);
+    }
 }

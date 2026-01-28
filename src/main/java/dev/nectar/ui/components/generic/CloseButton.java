@@ -32,7 +32,7 @@ public class CloseButton extends Component {
     }
 
     @Override
-    public boolean onLeftClick() {
+    public boolean onLeftClick(double mouseX, double mouseY) {
         if (parentComponent instanceof ModuleWindow moduleWindow) moduleWindow.close();
         return true;
     }

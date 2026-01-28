@@ -27,8 +27,8 @@ public abstract class Component {
 
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (isHovered(mouseX, mouseY)) {
-            if (mouseButton == 0) return onLeftClick();
-            if (mouseButton == 1) return onRightClick();
+            if (mouseButton == 0) return onLeftClick(mouseX, mouseY);
+            if (mouseButton == 1) return onRightClick(mouseX, mouseY);
         }
 
         return false;
@@ -51,7 +51,7 @@ public abstract class Component {
      *
      * @return Boolean
      */
-    public boolean onLeftClick() {
+    public boolean onLeftClick(double mouseX, double mouseY) {
         return false;
     };
 
@@ -60,7 +60,7 @@ public abstract class Component {
      *
      * @return Boolean
      */
-    public boolean onRightClick() {
+    public boolean onRightClick(double mouseX, double mouseY) {
         return false;
     }
 

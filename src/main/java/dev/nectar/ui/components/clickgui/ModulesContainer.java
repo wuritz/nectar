@@ -59,14 +59,17 @@ public class ModulesContainer extends Component {
         // Label
         context.drawTextWithShadow(mc.textRenderer, categoryLabel, x + 10, y + 10, Color.WHITE.getRGB());
         moduleButtons.forEach((moduleButton) -> moduleButton.render(context, mouseX, mouseY));
+
+        // Explainer
+        context.drawTextWithShadow(mc.textRenderer, "Right click to open a module", x + 10, y + height + mc.textRenderer.fontHeight - 5, Color.WHITE.getRGB());
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         moduleButtons.forEach((moduleButton) -> {
             if (moduleButton.isHovered(mouseX, mouseY)) {
-                if (button == 0) moduleButton.onLeftClick();
-                else moduleButton.onRightClick();
+                if (button == 0) moduleButton.onLeftClick(mouseX, mouseY);
+                else moduleButton.onRightClick(mouseX, mouseY);
             }
         });
 

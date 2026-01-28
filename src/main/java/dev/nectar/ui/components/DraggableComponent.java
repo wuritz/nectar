@@ -22,7 +22,7 @@ public abstract class DraggableComponent extends Component {
         if (isHovered(mouseX, mouseY)) {
             if ((mouseY <= y+20 && mouseY >= y) && mouseButton == 0) {
                 children.forEach(child -> {
-                    if (child.isHovered(mouseX, mouseY) && child instanceof CloseButton closeButton) closeButton.onLeftClick();
+                    if (child.isHovered(mouseX, mouseY) && child instanceof CloseButton closeButton) closeButton.onLeftClick(mouseX, mouseY);
                 });
 
                 dragging = true;
