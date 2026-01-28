@@ -1,10 +1,8 @@
-package dev.nectar.ui.screens.clickgui.settings;
+package dev.nectar.ui.screens.clickgui;
 
-import dev.nectar.Nectar;
 import dev.nectar.modules.Module;
 import dev.nectar.ui.components.DraggableComponent;
 import dev.nectar.ui.components.generic.CloseButton;
-import dev.nectar.ui.screens.clickgui.SettingsRenderer;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;

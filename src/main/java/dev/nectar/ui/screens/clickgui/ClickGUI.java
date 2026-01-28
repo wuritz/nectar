@@ -4,7 +4,6 @@ import dev.nectar.modules.Module;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.clickgui.CategoryButton;
 import dev.nectar.ui.components.clickgui.ModulesContainer;
-import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;

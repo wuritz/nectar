@@ -10,11 +10,8 @@ import dev.nectar.modules.setting.settings.KeybindSetting;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.generic.HorizontalSeparator;
 import dev.nectar.ui.components.settings.*;
-import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
 
-import java.awt.*;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 

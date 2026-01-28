@@ -2,7 +2,7 @@ package dev.nectar.ui.components.generic;
 
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.DraggableComponent;
-import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
+import dev.nectar.ui.screens.clickgui.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;

@@ -1,13 +1,9 @@
 package dev.nectar.ui.components.clickgui;
 
-import dev.nectar.Nectar;
 import dev.nectar.modules.Module;
 import dev.nectar.ui.components.Component;
-import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
-import dev.nectar.utils.render.RenderUtils;
-import net.minecraft.client.gl.RenderPipelines;
+import dev.nectar.ui.screens.clickgui.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
 
 import java.awt.*;
 
