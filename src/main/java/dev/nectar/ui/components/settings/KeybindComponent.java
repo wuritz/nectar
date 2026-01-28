@@ -1,23 +1,24 @@
 package dev.nectar.ui.components.settings;
 
 import dev.nectar.core.Color;
-import dev.nectar.modules.setting.settings.BooleanSetting;
-import dev.nectar.ui.components.generic.Checkbox;
+import dev.nectar.core.input.Keybind;
+import dev.nectar.modules.setting.settings.KeybindSetting;
+import dev.nectar.ui.components.generic.KeybindBox;
 import net.minecraft.client.gui.DrawContext;
 
 import static dev.nectar.Nectar.mc;
 
-public class BoolComponent extends SettingComponent<Boolean> {
+public class KeybindComponent extends SettingComponent<Keybind> {
 
-    public BoolComponent(int x, int y, int width, int height, BooleanSetting setting) {
+    public KeybindComponent(int x, int y, int width, int height, KeybindSetting setting) {
         super(x, y, width, height, setting);
 
         this.setting = setting;
 
         components.clear();
 
-        Checkbox checkbox  = new Checkbox(x+width-30, y-5, 10, height, this);
-        components.add(checkbox);
+        KeybindBox keybindBox = new KeybindBox(x+width-70, y, 50, height, this);
+        components.add(keybindBox);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class BoolComponent extends SettingComponent<Boolean> {
     @Override
     public void updateComponentsPos(int x, int y) {
         components.forEach(component -> {
-            component.x = x+width-30;
+            component.x = x+width-70;
             component.y = y;
         });
     }

@@ -21,8 +21,6 @@ public class Checkbox extends Component {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
-        x -= 10;
-
         // Background
         if (isHovered(mouseX, mouseY)) context.fill(x, y, x+width, y+height, new Color(131, 131, 131, 187).getRGB());
         context.fill(x, y, x+width, y+height, new Color(71, 71, 71, 155).getRGB());

@@ -24,9 +24,10 @@ public class Module implements ISerializable<Module> {
     private final Setting<Keybind> keybindSetting = new KeybindSetting.Builder()
             .name("Keybind").description("")
             .defaultValue(Keybind.none())
+            .onChange(this::changeKeybind)
             .build();
 
-    public final Keybind keybind = Keybind.none();
+    public Keybind keybind = Keybind.none();
 
     public enum Category {
         COMBAT("Combat"), PLAYER("Player"), MOVEMENT("Movement"), RENDER("Render"), MISC("Misc"), WORLD("World");
@@ -64,6 +65,10 @@ public class Module implements ISerializable<Module> {
             enabled = false;
             Modules.get().removeActive(this);
         }
+    }
+
+    private void changeKeybind(Keybind keybind) {
+        this.keybind.set(keybind);
     }
 
     public void onEnable() {}

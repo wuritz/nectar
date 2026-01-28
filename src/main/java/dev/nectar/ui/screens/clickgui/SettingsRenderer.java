@@ -6,16 +6,15 @@ import dev.nectar.modules.setting.Settings;
 import dev.nectar.modules.setting.settings.BooleanSetting;
 import dev.nectar.modules.setting.settings.DoubleSetting;
 import dev.nectar.modules.setting.settings.IntSetting;
+import dev.nectar.modules.setting.settings.KeybindSetting;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.generic.HorizontalSeparator;
-import dev.nectar.ui.components.settings.BoolComponent;
-import dev.nectar.ui.components.settings.DoubleComponent;
-import dev.nectar.ui.components.settings.IntComponent;
-import dev.nectar.ui.components.settings.SettingComponent;
+import dev.nectar.ui.components.settings.*;
 import dev.nectar.ui.screens.clickgui.settings.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +53,9 @@ public class SettingsRenderer {
             } else if (setting instanceof BooleanSetting) {
                 BoolComponent boolComponent = new BoolComponent(x, y, parentWindow.width, 10, (BooleanSetting) setting);
                 components.add(boolComponent);
+            } else if (setting instanceof KeybindSetting) {
+                KeybindComponent keybindComponent = new KeybindComponent(x, y, parentWindow.width, 10, (KeybindSetting) setting);
+                components.add(keybindComponent);
             }
 
             y += 20;
