@@ -1,8 +1,9 @@
 package dev.nectar.ui.components.generic;
 
+import dev.nectar.Nectar;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.DraggableComponent;
-import dev.nectar.ui.screens.clickgui.ModuleWindow;
+import dev.nectar.ui.window.windows.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;
@@ -33,7 +34,9 @@ public class CloseButton extends Component {
 
     @Override
     public boolean onLeftClick(double mouseX, double mouseY) {
-        if (parentComponent instanceof ModuleWindow moduleWindow) moduleWindow.close();
+        if (parentComponent instanceof ModuleWindow moduleWindow) {
+            if (Nectar.clickGUI.removeModuleWindow(moduleWindow)) moduleWindow.close();
+        }
         return true;
     }
 }

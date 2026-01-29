@@ -10,6 +10,7 @@ import dev.nectar.modules.setting.settings.KeybindSetting;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.generic.HorizontalSeparator;
 import dev.nectar.ui.components.settings.*;
+import dev.nectar.ui.window.Window;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -19,13 +20,13 @@ public class SettingsRenderer {
 
     private final Module module;
     private final Settings settings;
-    private final ModuleWindow parentWindow;
+    private final Window parentWindow;
 
     private final List<Component> components = new ArrayList<>();
 
     private int x, y;
 
-    public SettingsRenderer(Module module, ModuleWindow parentWindow) {
+    public SettingsRenderer(Module module, Window parentWindow) {
         this.module = module;
         this.settings = module.settings;
         this.parentWindow = parentWindow;

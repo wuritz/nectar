@@ -2,7 +2,7 @@ package dev.nectar.ui.components.clickgui;
 
 import dev.nectar.modules.Module;
 import dev.nectar.ui.components.Component;
-import dev.nectar.ui.screens.clickgui.ModuleWindow;
+import dev.nectar.ui.window.windows.ModuleWindow;
 import net.minecraft.client.gui.DrawContext;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ import static dev.nectar.Nectar.mc;
 public class ModuleButton extends Component {
 
     public final Module module;
-    private final ModuleWindow moduleWindow;
+    private ModuleWindow moduleWindow;
     private final ModulesContainer parent;
     private final boolean overlapping = false;
 
@@ -21,7 +21,7 @@ public class ModuleButton extends Component {
 
         this.parent = parent;
         this.module = module;
-        this.moduleWindow = new ModuleWindow(200, 300, 400, 300, module);
+        this.moduleWindow = null;
     }
 
     @Override
@@ -51,6 +51,7 @@ public class ModuleButton extends Component {
     public boolean onRightClick(double mouseX, double mouseY) {
         if (overlapping) return false;
 
+        if (moduleWindow == null) moduleWindow = new ModuleWindow(200, 300, 400, 300, module);
         if (parent.clickGUI.isModuleWindowOpen(moduleWindow)) return false;
 
         parent.clickGUI.addModuleWindow(moduleWindow);

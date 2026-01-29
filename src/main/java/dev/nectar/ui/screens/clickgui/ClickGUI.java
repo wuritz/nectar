@@ -4,6 +4,7 @@ import dev.nectar.modules.Module;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.clickgui.CategoryButton;
 import dev.nectar.ui.components.clickgui.ModulesContainer;
+import dev.nectar.ui.window.windows.ModuleWindow;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -12,6 +13,10 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import static dev.nectar.Nectar.mc;
 
@@ -19,7 +24,7 @@ public class ClickGUI extends Screen {
 
     private final List<Component> components = new ArrayList<>();
     private final List<CategoryButton> categoryButtons = new ArrayList<>();
-    private final List<ModuleWindow> moduleWindows = new ArrayList<>();
+    private final ConcurrentHashMap<Module, ModuleWindow> moduleWindows = new ConcurrentHashMap<>();
 
     private boolean overlapping = false;
 
@@ -33,7 +38,12 @@ public class ClickGUI extends Screen {
     }
 
     public void addModuleWindow(ModuleWindow moduleWindow) {
-        moduleWindows.add(moduleWindow);
+        if (moduleWindows.containsKey(moduleWindow.module)) return;
+        moduleWindows.put(moduleWindow.module, moduleWindow);
+    }
+
+    public boolean removeModuleWindow(ModuleWindow moduleWindow) {
+        return moduleWindows.remove(moduleWindow.module) != null;
     }
 
     /**
@@ -76,7 +86,7 @@ public class ClickGUI extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         components.forEach(component -> component.render(context, mouseX, mouseY));
-        moduleWindows.forEach(moduleWindow -> {
+        moduleWindows.forEach((module, moduleWindow) -> {
             moduleWindow.render(context, mouseX, mouseY);
             moduleWindow.updatePos(mouseX, mouseY);
         });
@@ -85,7 +95,7 @@ public class ClickGUI extends Screen {
     @Override
     public boolean mouseClicked(Click click, boolean doubled) {
         components.forEach(component -> {
-            moduleWindows.forEach(moduleWindow -> {
+            moduleWindows.forEach((module, moduleWindow) -> {
                 if (!moduleWindow.isOpened()) {
                     overlapping = false;
                     return;
@@ -123,12 +133,12 @@ public class ClickGUI extends Screen {
 
     @Override
     public boolean mouseReleased(Click click) {
-        moduleWindows.forEach(moduleWindow -> moduleWindow.mouseReleased(click.x(), click.y(), click.button()));
+        moduleWindows.forEach((mod, moduleWindow) -> moduleWindow.mouseReleased(click.x(), click.y(), click.button()));
 
         return super.mouseReleased(click);
     }
 
     public boolean isModuleWindowOpen(ModuleWindow moduleWindow) {
-        return moduleWindows.contains(moduleWindow);
+        return moduleWindows.containsKey(moduleWindow.module);
     }
 }

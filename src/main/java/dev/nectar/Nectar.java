@@ -40,6 +40,8 @@ public class Nectar implements ModInitializer {
 	public static final File FOLDER = FabricLoader.getInstance().getGameDir().resolve(MOD_ID).toFile();
 	public static final Logger LOG;
 
+	public static ClickGUI clickGUI;
+
 	private boolean firstLoad = false;
 
 	static {
@@ -104,7 +106,8 @@ public class Nectar implements ModInitializer {
 	private void toggleGui() {
 		if (Utils.canCloseGui()) mc.currentScreen.close();
 		else if (Utils.canOpenGui()) {
-			mc.setScreen(new ClickGUI());
+			clickGUI = new ClickGUI();
+			mc.setScreen(clickGUI);
 		}
 	}
 
