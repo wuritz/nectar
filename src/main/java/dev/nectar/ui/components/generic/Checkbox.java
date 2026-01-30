@@ -42,7 +42,4 @@ public class Checkbox extends Component {
 
         return false;
     }
-
-
-
 }

@@ -7,7 +7,6 @@ import dev.nectar.events.core.input.KeyEvent;
 import dev.nectar.modules.setting.settings.KeybindSetting;
 import dev.nectar.ui.components.Component;
 import dev.nectar.ui.components.settings.KeybindComponent;
-import dev.nectar.ui.components.settings.SettingComponent;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
