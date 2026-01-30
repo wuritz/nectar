@@ -1,10 +1,10 @@
 package dev.nectar.ui.components;
 
 import dev.nectar.ui.components.generic.CloseButton;
-import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class DraggableComponent extends Component {
 
@@ -22,9 +22,16 @@ public abstract class DraggableComponent extends Component {
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (isHovered(mouseX, mouseY)) {
             if ((mouseY <= y+20 && mouseY >= y) && mouseButton == 0) {
+
+                // Needed to eliminate a bug
+                AtomicBoolean cont = new AtomicBoolean(true);
                 components.forEach(child -> {
-                    if (child.isHovered(mouseX, mouseY) && child instanceof CloseButton closeButton) closeButton.onLeftClick(mouseX, mouseY);
+                    if (child.isHovered(mouseX, mouseY) && child instanceof CloseButton closeButton) {
+                        closeButton.onLeftClick(mouseX, mouseY);
+                        cont.set(false);
+                    }
                 });
+                if (!cont.get()) return false;
 
                 dragging = true;
 

@@ -42,17 +42,19 @@ public class ModuleWindow extends Window {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        if (!isOpened()) return false;
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        if (isHovered(mouseX, mouseY) && isOpened()) settingsRenderer.mouseClicked(mouseX, mouseY, mouseButton);
+        if (isHovered(mouseX, mouseY)) settingsRenderer.mouseClicked(mouseX, mouseY, mouseButton);
         return true;
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
+        if (!isOpened()) return false;
         super.mouseReleased(mouseX, mouseY, mouseButton);
 
-        if (isOpened()) settingsRenderer.mouseReleased(mouseX, mouseY, mouseButton);
+        settingsRenderer.mouseReleased(mouseX, mouseY, mouseButton);
         return true;
     }
 
