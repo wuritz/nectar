@@ -1,11 +1,7 @@
 package dev.nectar.ui.components.settings;
 
-import dev.nectar.core.Color;
 import dev.nectar.modules.setting.settings.BooleanSetting;
 import dev.nectar.ui.components.generic.Checkbox;
-import net.minecraft.client.gui.DrawContext;
-
-import static dev.nectar.Nectar.mc;
 
 public class BoolComponent extends SettingComponent<Boolean> {
 
@@ -16,13 +12,6 @@ public class BoolComponent extends SettingComponent<Boolean> {
 
         Checkbox checkbox  = new Checkbox(x+width-30, y-5, 10, height, this);
         components.add(checkbox);
-    }
-
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
-        context.drawTextWithShadow(mc.textRenderer, setting.getName(), x, y, Color.WHITE.getPacked());
-
-        components.forEach(component -> component.render(context, mouseX, mouseY));
     }
 
     @Override

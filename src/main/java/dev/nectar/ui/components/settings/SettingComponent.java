@@ -1,12 +1,14 @@
 package dev.nectar.ui.components.settings;
 
+import dev.nectar.core.Color;
 import dev.nectar.modules.setting.Setting;
 import dev.nectar.ui.components.Component;
 import net.minecraft.client.gui.DrawContext;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.nectar.Nectar.mc;
 
 public abstract class SettingComponent<T> extends Component {
 
@@ -19,7 +21,11 @@ public abstract class SettingComponent<T> extends Component {
         this.setting = setting;
     }
 
-    public abstract void render(DrawContext context, int mouseX, int mouseY);
+    public void render(DrawContext context, int mouseX, int mouseY) {
+        context.drawTextWithShadow(mc.textRenderer, setting.getName(), x, y, Color.WHITE.getPacked());
+
+        components.forEach(component -> component.render(context, mouseX, mouseY));
+    }
 
     public float getValueForSlider() {
         if (setting.get() instanceof Boolean bool) {

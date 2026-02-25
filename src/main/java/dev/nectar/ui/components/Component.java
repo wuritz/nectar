@@ -38,7 +38,7 @@ public abstract class Component {
     }
 
     /**
-     * Optional void for handling mouse release
+     * Optional void to handle mouse release action
      *
      * @param mouseX
      * @param mouseY

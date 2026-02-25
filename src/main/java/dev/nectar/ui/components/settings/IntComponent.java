@@ -1,11 +1,7 @@
 package dev.nectar.ui.components.settings;
 
-import dev.nectar.core.Color;
 import dev.nectar.modules.setting.settings.IntSetting;
 import dev.nectar.ui.components.generic.Slider;
-import net.minecraft.client.gui.DrawContext;
-
-import static dev.nectar.Nectar.mc;
 
 public class IntComponent extends SettingComponent<Integer> {
 
@@ -16,13 +12,6 @@ public class IntComponent extends SettingComponent<Integer> {
 
         Slider slider = new Slider(x+(width/2), y, width/2-35, height, setting.getMax(), this);
         components.add(slider);
-    }
-
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
-        context.drawTextWithShadow(mc.textRenderer, setting.getName(), x, y, Color.WHITE.getPacked());
-
-        components.forEach(component -> component.render(context, mouseX, mouseY));
     }
 
     @Override
