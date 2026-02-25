@@ -15,8 +15,6 @@ public class KeybindComponent extends SettingComponent<Keybind> {
 
         this.setting = setting;
 
-        components.clear();
-
         KeybindBox keybindBox = new KeybindBox(x+width-70, y, 50, height, this);
         components.add(keybindBox);
     }

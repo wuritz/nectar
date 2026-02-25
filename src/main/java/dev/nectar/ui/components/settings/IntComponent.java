@@ -14,8 +14,6 @@ public class IntComponent extends SettingComponent<Integer> {
 
         this.setting = setting;
 
-        components.clear();
-
         Slider slider = new Slider(x+(width/2), y, width/2-35, height, setting.getMax(), this);
         components.add(slider);
     }

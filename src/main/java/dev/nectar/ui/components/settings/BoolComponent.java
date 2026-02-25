@@ -14,8 +14,6 @@ public class BoolComponent extends SettingComponent<Boolean> {
 
         this.setting = setting;
 
-        components.clear();
-
         Checkbox checkbox  = new Checkbox(x+width-30, y-5, 10, height, this);
         components.add(checkbox);
     }
