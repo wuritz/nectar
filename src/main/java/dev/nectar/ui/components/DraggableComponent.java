@@ -37,6 +37,8 @@ public abstract class DraggableComponent extends Component {
 
                 dragX = (int) (mouseX - x);
                 dragY = (int) (mouseY - y);
+
+                return true;
             }
         }
         return false;

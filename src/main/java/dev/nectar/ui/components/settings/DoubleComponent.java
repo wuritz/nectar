@@ -16,7 +16,7 @@ public class DoubleComponent extends SettingComponent<Double> {
 
         components.clear();
 
-        Slider slider = new Slider(x+(width/2), y, width/2-35, height, setting.getMax(), this);
+        Slider slider = new Slider(x+(width/2), y, width/2-35, height, setting.getMax(), this, true);
         components.add(slider);
     }
 

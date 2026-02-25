@@ -14,20 +14,29 @@ import static dev.nectar.Nectar.mc;
 public class Slider extends Component {
 
     private final SettingComponent parentComponent;
+
     private final double max;
     private double scrollingValue;
-    private boolean sliding;
 
+    private boolean sliding;
+    private final boolean decimalNeeded;
+
+    // There's probably a better way to do this, but nevermind
     private String scrollingText = "";
 
-    public Slider(int x, int y, int width, int height, double max, SettingComponent<?> parentComponent) {
+    public Slider(int x, int y, int width, int height, double max, SettingComponent<?> parentComponent, boolean decimalNeeded) {
         super(x, y, width, height);
 
         this.parentComponent = parentComponent;
         this.max = max;
+        this.decimalNeeded = decimalNeeded;
 
         sliding = false;
         this.scrollingValue = parentComponent.getValueForSlider();
+    }
+
+    public Slider(int x, int y, int width, int height, double max, SettingComponent<?> parentComponent) {
+        this(x, y, width, height, max, parentComponent, false);
     }
 
     private String getScrollingText(int maxDraw, int toDraw) {
@@ -38,8 +47,10 @@ public class Slider extends Component {
             scrollingValue = parentComponent.getValueForSlider();
         }
 
-        BigDecimal bd = new BigDecimal(Double.toString(scrollingValue));
-        return String.valueOf(bd.setScale(2, RoundingMode.HALF_UP));
+        BigDecimal bd = new BigDecimal(Double.toString(scrollingValue)).setScale(2, RoundingMode.HALF_UP);
+
+        if (!decimalNeeded) return String.valueOf(bd.intValue());
+        return String.valueOf(bd.doubleValue());
     }
 
     @Override

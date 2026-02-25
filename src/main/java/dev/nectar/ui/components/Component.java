@@ -2,6 +2,9 @@ package dev.nectar.ui.components;
 
 import net.minecraft.client.gui.DrawContext;
 
+/**
+ * Only used to have X, Y coordinates and such.
+ */
 public abstract class Component {
 
     public int x;
